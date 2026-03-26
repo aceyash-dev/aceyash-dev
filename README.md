@@ -1,5 +1,5 @@
-<img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" alt="Banner" width="100%" />
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=900&pause=1000&color=5539CC&width=450&lines=I+am+Yash+Gupta+AKA+Ace+Yash.+;I+am+a+Teen+Vibe+Developer+from+VNS)](https://git.io/typing-svg)
+<img src="https://user-images.githubusercontent.com/74038190/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif" alt="Banner" width="100%" />
 
 ## 💫 About Me:
 Just an introvert vibe developer... 
