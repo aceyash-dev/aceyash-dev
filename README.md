@@ -4,6 +4,13 @@
 ## 💫 About Me:
 Just an introvert vibe developer... 
 
+- 🤝 I'm looking for help with **App Development**
+
+- 💬 Ask me about **AI**
+
+- ⚡ Fun fact **I am an alien**
+
+- 👨‍💻 All of my projects are available at **[https://aceyash.vercel.app](https://aceyash.vercel.app)**
 
 ## 🌐 Socials:
 [![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/archives.of.yash) [![Mastodon](https://img.shields.io/badge/-MASTODON-%232B90D9?logo=mastodon&logoColor=white)](https://mastodon.social/@aceyash-dev) [![email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:aceyash-dev@proton.me) 
@@ -15,31 +22,21 @@ Just an introvert vibe developer...
 ![](https://nirzak-streak-stats.vercel.app/?user=aceyash-dev&theme=chartreuse-dark&hide_border=false)<br/>
 ![](https://github-readme-stats.vercel.app/api/top-langs/?username=aceyash-dev&theme=chartreuse-dark&hide_border=false&include_all_commits=false&count_private=false&layout=compact)
 
-## 🏆 GitHub Trophies
-![](https://github-profile-trophy.vercel.app/?username=aceyash-dev&theme=chartreuse-dark&no-frame=false&no-bg=false&margin-w=4)
 
 ### 🔝 Top Contributed Repo
-![AceHub:FPS Display](https://github.com/aceyash-dev/AceHub)
+![AceHub](https://github.com/aceyash-dev/AceHub)
 
 ---
 [![](https://visitcount.itsvg.in/api?id=aceyash-dev&icon=0&color=3)](https://visitcount.itsvg.in)
 
-  ## 💰 You can help me by Donating
+  ## 💰 Support me here-
   [![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/sarojg085) 
 
 <a href="https://chai4.me/aceyash-dev" target="_blank" title="Support aceyash-dev on Chai4Me" style="display:inline-flex;flex-direction:column;align-items:center;justify-content:center;background:#ffffff;padding:8px 32px;border-radius:16px;text-decoration:none;border:1px solid #e5e7eb;box-shadow:0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.05);transition:transform 0.2s;"><img src="https://chai4.me/icons/wordmark.png" alt="Chai4Me" style="height:32px;object-fit:contain;"/></a>
 
 
 
-- 🤝 I'm looking for help with **App Development**
 
-- 💬 Ask me about **AI**
-
-- 📫 How to reach me **aceyash-dev@proton.me**
-
-- ⚡ Fun fact **I am an alien**
-
-- 👨‍💻 All of my projects are available at **[https://aceyash.vercel.app](https://aceyash.vercel.app)**
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
