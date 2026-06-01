@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Digital Rain - Fixed Spacing Uniform Edition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            cursor: pointer;
+            font-family: monospace;
+        }
+
+        canvas {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Cinematic CRT screen overlay mesh */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.22) 50%), 
+                        linear-gradient(90deg, rgba(255, 255, 255, 0.01), rgba(0, 0, 0, 0.04), rgba(255, 255, 255, 0.01));
+            background-size: 100% 4px, 6px 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Premium Cyberpunk Translucent Digital Clock Widget - Top Center Profile */
+        .clock-widget {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(8, 8, 8, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px 28px;
+            border-radius: 10px;
+            color: #ffffff;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 10px 35px 0 rgba(0, 0, 0, 0.6);
+            letter-spacing: 3px;
+            pointer-events: auto;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .clock-widget:hover {
+            border-color: rgba(0, 255, 100, 0.3);
+            box-shadow: 0 10px 35px 0 rgba(0, 255, 100, 0.1);
+        }
+
+        .clock-time {
+            font-size: 28px;
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .clock-ampm {
+            font-size: 15px;
+            margin-left: 6px;
+            color: rgba(255, 255, 255, 0.6);
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrixCanvas"></canvas>
+    <div class="overlay"></div>
+
+    <!-- Top-Centered Clock Widget Shell -->
+    <div class="clock-widget" id="clockCard">
+        <span class="clock-time" id="digitalClock">12:00:00</span>
+        <span class="clock-ampm" id="clockAmPm">AM</span>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        const clockCard = document.getElementById('clockCard');
+
+        const alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; 
+        
+        let rainDrops = [];
+        let clockBounds = { left: 0, right: 0, top: 0, bottom: 0 };
+
+        // CHANGED: Standardized global character sizes and perfect layout increments
+        const globalFontSize = 22;
+        const horizontalSpacing = 20;
+
+        function getRainbowColor(distanceFromHead, totalTrailLength, opacity, opacityMod) {
+            const ratio = distanceFromHead / totalTrailLength;
+            const hue = ratio * 290; 
+            return `hsla(${hue}, 100%, 50%, ${opacity * opacityMod})`;
+        }
+
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            hours = hours % 12;
+            hours = hours ? hours : 12; 
+            const formattedHours = String(hours).padStart(2, '0');
+
+            document.getElementById('digitalClock').textContent = `${formattedHours}:${minutes}:${seconds}`;
+            document.getElementById('clockAmPm').textContent = ampm;
+        }
+        setInterval(updateClock, 1000);
+        updateClock(); 
+
+        function calculateClockBounds() {
+            const rect = clockCard.getBoundingClientRect();
+            clockBounds = {
+                left: rect.left - 15,
+                right: rect.right + 15,
+                top: rect.top - 15,
+                bottom: rect.bottom + 15
+            };
+        }
+
+        function initializeRain() {
+            calculateClockBounds();
+            // CHANGED: Columns calculated using locked flat spacing increments
+            columns = Math.floor(canvas.width / horizontalSpacing); 
+            rainDrops = [];
+            
+            for (let x = 0; x < columns; x++) {
+                const rand = Math.random();
+                let layer, baseSpeed, opacityModifier, trailLength;
+
+                // Retained 40/33/27 profile splitting internally for falling speed/trails depth variation
+                if (rand < 0.40) {
+                    layer = 0; // 40% Background Track
+                    baseSpeed = 0.10;
+                    opacityModifier = 0.55; 
+                    trailLength = 16;
+                } else if (rand < 0.73) {
+                    layer = 1; // 33% Midground Track
+                    baseSpeed = 0.22;
+                    opacityModifier = 0.80; 
+                    trailLength = 24;
+                } else {
+                    layer = 2; // 27% Foreground Track
+                    baseSpeed = 0.38;
+                    opacityModifier = 1.0; 
+                    trailLength = 32;
+                }
+
+                const totalRows = Math.ceil(canvas.height / globalFontSize) + 5;
+                const cells = [];
+                for (let y = 0; y < totalRows; y++) {
+                    cells.push({
+                        char: alphabet.charAt(Math.floor(Math.random() * alphabet.length)),
+                        opacity: 0
+                    });
+                }
+
+                rainDrops.push({
+                    baseX: x * horizontalSpacing, // Clean, predictably spaced straight lanes
+                    layer: layer,
+                    baseSpeed: baseSpeed, 
+                    gravityPulse: Math.random() * Math.PI, 
+                    opacityModifier: opacityModifier,
+                    cells: cells,
+                    headY: Math.random() * -80,
+                    trailLength: trailLength
+                });
+            }
+        }
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initializeRain();
+        }
+
+        let lastTime = 0;
+
+        function draw(timestamp) {
+            if (!lastTime) lastTime = timestamp;
+            const delta = timestamp - lastTime;
+            lastTime = timestamp;
+
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.shadowBlur = 0;
+
+            // Render depth layers sequentially to preserve code stacking layers
+            for (let currentLayer = 0; currentLayer < 3; currentLayer++) {
+                
+                for (let i = 0; i < rainDrops.length; i++) {
+                    const drop = rainDrops[i];
+                    if (drop.layer !== currentLayer) continue;
+
+                    // Top center widget occlusion checker framework
+                    if (drop.baseX > clockBounds.left && drop.baseX < clockBounds.right) {
+                        if (drop.layer > 0) {
+                            drop.gravityPulse += 0.008 * (delta * 0.05);
+                            const speed = drop.baseSpeed * (1.0 + Math.sin(drop.gravityPulse) * 0.25);
+                            drop.headY += speed * (delta * 0.05);
+                            if ((Math.floor(drop.headY) - drop.trailLength) * globalFontSize > canvas.height) {
+                                drop.headY = -drop.trailLength;
+                            }
+                            continue;
+                        }
+                    }
+
+                    // CHANGED: Replaced variable fonts with a single, massive uniform style reference
+                    ctx.font = `bold ${globalFontSize}px monospace`;
+
+                    // --- LIQUID PHYSICS ENGINE ---
+                    drop.gravityPulse += 0.008 * (delta * 0.05);
+                    const currentSpeedFactor = drop.baseSpeed * (1.0 + Math.sin(drop.gravityPulse) * 0.25);
+                    drop.headY += currentSpeedFactor * (delta * 0.05);
+                    
+                    const currentHeadIndex = Math.floor(drop.headY);
+
+                    if ((currentHeadIndex - drop.trailLength) * globalFontSize > canvas.height) {
+                        drop.headY = -drop.trailLength;
+                        drop.gravityPulse = Math.random() * Math.PI; 
+                        for(let c = 0; c < drop.cells.length; c++) {
+                            drop.cells[c].opacity = 0;
+                        }
+                    }
+
+                    for (let y = 0; y < drop.cells.length; y++) {
+                        const cell = drop.cells[y];
+                        const cellPixelY = y * globalFontSize;
+
+                        if (cellPixelY < -40 || cellPixelY > canvas.height + 40) continue;
+
+                        if (drop.layer === 0 && drop.baseX > clockBounds.left && drop.baseX < clockBounds.right) {
+                            if (cellPixelY > clockBounds.top && cellPixelY < clockBounds.bottom) continue;
+                        }
+
+                        if (y === currentHeadIndex) {
+                            cell.opacity = 1.0;
+                        } else if (y < currentHeadIndex && y >= currentHeadIndex - drop.trailLength) {
+                            const distanceFromHead = currentHeadIndex - y;
+                            cell.opacity = 1.0 - (distanceFromHead / drop.trailLength);
+                        } else {
+                            cell.opacity -= 0.012 * (delta * 0.05); 
+                            if (cell.opacity < 0) cell.opacity = 0;
+                        }
+
+                        if (cell.opacity <= 0) continue;
+
+                        const distanceFromHead = currentHeadIndex - y;
+                        ctx.fillStyle = getRainbowColor(distanceFromHead, drop.trailLength, cell.opacity, drop.opacityModifier);
+
+                        if (Math.random() > 0.99) {
+                            cell.char = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                        }
+
+                        ctx.fillText(cell.char, drop.baseX, cellPixelY);
+                    }
+                }
+            }
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('orientationchange', () => setTimeout(resizeCanvas, 100));
+        
+        resizeCanvas();
+
+        function animationEngine(timestamp) {
+            draw(timestamp);
+            requestAnimationFrame(animationEngine);
+        }
+        
+        requestAnimationFrame(animationEngine);
+    </script>
+</body>
+</html>
