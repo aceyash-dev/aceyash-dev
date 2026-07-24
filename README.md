@@ -7,12 +7,7 @@
 # 💫 About Me:
 Just a teen introvert vibe developer... 
 
-- 🤝 I'm looking for help with **App Development**
-
-- 💬 Ask me about **AI**
-
-- ⚡ Fun fact **I am an alien**
-
+- 🤝 I'm looking for help with **Web & App Development**
 
 <img src="https://user-images.githubusercontent.com/74038190/235224431-e8c8c12e-6826-47f1-89fb-2ddad83b3abf.gif" width="300">
 
@@ -29,7 +24,7 @@ Just a teen introvert vibe developer...
 
 
 # 🔝 Top Contributed Repo
-![AceHub](https://github.com/aceyash-dev/AceHub)
+![Ace Hub](https://github.com/aceyash-dev/AceHub)
 
 ---
 [![](https://visitcount.itsvg.in/api?id=aceyash-dev&icon=0&color=3)](https://visitcount.itsvg.in)
