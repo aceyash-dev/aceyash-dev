@@ -1,1350 +1,4263 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Ace Base // Advanced Systems Lab</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- CDNs -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
-    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
-
-    <style>
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        :root {
-            --bg-base: #F5D7E3;
-            --card-bg: rgba(252, 251, 252, 0.7);
-            --card-border: rgba(135, 103, 123, 0.08);
-            --text-primary: #02020B;
-            --text-secondary: #5C525A;
-            --accent-primary: #87677B;
-            --accent-glow: #DACC3E;
-            --glow-highlight: #D6FFF6;
-            --font-display: 'Bricolage Grotesque', sans-serif;
-            --font-body: 'Manrope', sans-serif;
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            background-color: var(--bg-base);
-            font-family: var(--font-body);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            -webkit-tap-highlight-color: transparent;
-            transition: overflow 0.3s;
-        }
-
-        /* Global spotlight */
-        .global-spotlight {
-            position: fixed;
-            pointer-events: none;
-            z-index: 3;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(218, 204, 62, 0.06) 0%, rgba(135, 103, 123, 0.03) 30%, transparent 70%);
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-
-        .bg-viewport {
-            position: fixed;
-            inset: 0;
-            z-index: 1;
-            overflow: hidden;
-            background: radial-gradient(circle at 50% 0%, #FFF5F9 0%, var(--bg-base) 100%);
-            pointer-events: none;
-        }
-
-        .architectural-backdrop {
-            position: absolute;
-            inset: 0;
-            opacity: 0.06;
-            background-image: linear-gradient(rgba(135, 103, 123, 0.15) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(135, 103, 123, 0.15) 1px, transparent 1px),
-                linear-gradient(45deg, transparent 48%, var(--accent-primary) 49%, var(--accent-primary) 50%, transparent 51%);
-            background-size: 100px 100px, 100px 100px, 100% 100%;
-            will-change: transform;
-        }
-
-        .grain-overlay {
-            position: absolute;
-            inset: 0;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-        }
-
-        .ambient-glow {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(150px);
-            opacity: 0.6;
-            will-change: transform;
-        }
-
-        .glow-frozen {
-            top: -10%;
-            right: 15%;
-            width: 55vw;
-            height: 55vw;
-            background: radial-gradient(circle, var(--glow-highlight) 0%, transparent 70%);
-        }
-
-        .glow-warm {
-            bottom: 15%;
-            left: -5%;
-            width: 45vw;
-            height: 45vw;
-            background: radial-gradient(circle, rgba(218, 204, 62, 0.15) 0%, transparent 70%);
-        }
-
-        #fx-canvas {
-            position: fixed;
-            inset: 0;
-            z-index: 2;
-            display: block;
-            pointer-events: none;
-        }
-
-        .urban-grid {
-            position: absolute;
-            inset: 0;
-            background-image: linear-gradient(rgba(135, 103, 123, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(135, 103, 123, 0.02) 1px, transparent 1px);
-            background-size: 50px 50px;
-            mask-image: radial-gradient(circle at 50% 50%, black 50%, transparent 95%);
-            -webkit-mask-image: radial-gradient(circle at 50% 50%, black 50%, transparent 95%);
-            pointer-events: none;
-        }
-
-        /* Nav */
-        .nav-header {
-            position: fixed;
-            top: 1.5rem;
-            left: 50%;
-            transform: translateX(-50%) translateY(-50px);
-            width: calc(100% - 3rem);
-            max-width: 1140px;
-            z-index: 100;
-            background: rgba(252, 251, 252, 0.5);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 100px;
-            padding: 0.75rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 10px 40px rgba(135, 103, 123, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.8);
-            opacity: 0;
-            transition: padding 0.35s, background 0.35s;
-        }
-
-        .nav-header.scrolled {
-            padding: 0.45rem 1.3rem;
-            background: rgba(255, 255, 255, 0.82);
-        }
-
-        .nav-identity {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            text-decoration: none;
-            z-index: 110;
-        }
-
-        .nav-logo-text {
-            font-family: var(--font-display);
-            font-size: 1.35rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.03em;
-        }
-
-        .nav-logo-icon { font-size: 1.15rem; display: inline-flex; }
-
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            gap: 2.5rem;
-            list-style: none;
-        }
-
-        .nav-link {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 100%;
-            height: 1.5px;
-            background-color: var(--accent-primary);
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.3s ease;
-        }
-
-        .nav-link:hover::after,
-        .nav-link.active::after { transform: scaleX(1); transform-origin: left; }
-        .nav-link.active { color: var(--text-primary); }
-        .nav-link:hover { color: var(--text-primary); }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 1.25rem;
-        }
-
-        .nav-cta {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #FCFBFC;
-            text-decoration: none;
-            background: var(--text-primary);
-            padding: 0.55rem 1.5rem;
-            border-radius: 100px;
-            display: inline-block;
-            will-change: transform;
-        }
-
-        .hamburger-btn {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            padding: 0.5rem;
-            z-index: 110;
-        }
-
-        .hamburger-line {
-            width: 22px;
-            height: 1.5px;
-            background-color: var(--text-primary);
-            border-radius: 2px;
-        }
-
-        /* Mobile drawer */
-        .mobile-menu-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(252, 251, 252, 0.96);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            z-index: 90;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 4rem;
-            opacity: 0;
-            pointer-events: none;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
-
-        .mobile-menu-overlay.is-active {
-            opacity: 1;
-            pointer-events: auto;
-            visibility: visible;
-        }
-
-        .mobile-menu-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            transform: translateY(40px);
-            opacity: 0;
-            transition: transform 0.45s ease, opacity 0.45s ease;
-        }
-
-        .mobile-menu-overlay.is-active .mobile-menu-list {
-            transform: none;
-            opacity: 1;
-        }
-
-        .mobile-menu-link {
-            font-family: var(--font-display);
-            font-size: 3rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            text-decoration: none;
-            letter-spacing: -0.02em;
-        }
-
-        /* Cursor */
-        .custom-cursor {
-            width: 6px;
-            height: 6px;
-            background: var(--text-primary);
-            border-radius: 50%;
-            position: fixed;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9999;
-            display: none;
-        }
-
-        .custom-cursor-aura {
-            width: 34px;
-            height: 34px;
-            border: 1px solid rgba(137, 103, 123, 0.25);
-            border-radius: 50%;
-            position: fixed;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9998;
-            will-change: transform;
-            display: none;
-        }
-
-        @media (pointer: fine) {
-            .custom-cursor,
-            .custom-cursor-aura { display: block; }
-        }
-
-        .hyper-splash-ring {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 999;
-            transform: translate(-50%, -50%) scale(0);
-        }
-        .ring-outer { border: 1px solid rgba(135, 103, 123, 0.25); }
-        .ring-inner {
-            border: 3px solid var(--accent-glow);
-            box-shadow: 0 0 20px rgba(218, 204, 62, 0.35);
-        }
-        .ring-core {
-            background: radial-gradient(circle, rgba(218, 204, 62, 0.15) 0%, transparent 70%);
-        }
-
-        /* Sections */
-        .app-viewport {
-            position: relative;
-            z-index: 5;
-            width: 100%;
-        }
-
-        section {
-            position: relative;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 8rem 2rem;
-        }
-
-        .hero-container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 10rem;
-            overflow: hidden;
-        }
-
-        .hero-badge-container {
-            margin-bottom: 2rem;
-            will-change: transform;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.4);
-            border: 1px solid rgba(135, 103, 123, 0.12);
-            padding: 0.5rem 1.25rem;
-            border-radius: 100px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .hero-heading {
-            font-family: var(--font-display);
-            font-size: clamp(3.2rem, 8vw, 7rem);
-            font-weight: 700;
-            line-height: 0.95;
-            letter-spacing: -0.04em;
-            margin-bottom: 2.5rem;
-            will-change: transform, opacity;
-        }
-
-        .hero-heading span { display: block; overflow: hidden; }
-        .hero-heading span span { display: block; opacity: 0; transform: translateY(80px); }
-        .hero-heading em { font-style: normal; font-weight: 300; color: var(--accent-primary); }
-
-        .hero-footer-row {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            gap: 4rem;
-            margin-top: 2rem;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .hero-desc {
-            font-size: 1.15rem;
-            line-height: 1.6;
-            max-width: 520px;
-            color: var(--text-secondary);
-        }
-
-        .scroll-indicator {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--accent-primary);
-        }
-
-        .scroll-indicator-line {
-            width: 1px;
-            height: 60px;
-            background: rgba(135, 103, 123, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .scroll-indicator-line::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 30px;
-            background: var(--text-primary);
-            animation: scrollPulse 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-        }
-
-        @keyframes scrollPulse {
-            0% { transform: translateY(-100%); }
-            80%, 100% { transform: translateY(200%); }
-        }
-
-        .editorial-container { opacity: 0; transform: translateY(40px); }
-
-        .editorial-quote-box {
-            border-left: 2px solid var(--accent-primary);
-            padding-left: 2.5rem;
-            max-width: 800px;
-        }
-
-        .editorial-quote-en {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            font-weight: 400;
-            line-height: 1.3;
-            margin-bottom: 1rem;
-            letter-spacing: -0.02em;
-        }
-
-        .editorial-quote-sub { font-size: 1rem; color: var(--text-secondary); }
-
-        .section-title-row {
-            margin-bottom: 4rem;
-            opacity: 0;
-            transform: translateY(40px);
-            will-change: transform, opacity;
-        }
-
-        .section-title-row span {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--accent-primary);
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .section-title-row h2 {
-            font-family: var(--font-display);
-            font-size: 3.5rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            width: 100%;
-        }
-
-        .tilt-card-wrapper {
-            position: relative;
-            height: 100%;
-            text-decoration: none;
-            display: block;
-            will-change: transform;
-        }
-
-        .premium-card {
-            position: relative;
-            background: var(--card-bg);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 3.5rem 2.5rem;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 30px 60px rgba(135, 103, 123, 0.03), inset 0 1px 0px rgba(255, 255, 255, 0.6);
-            opacity: 0;
-            transform: translateY(60px);
-            transition: border-color 0.3s ease;
-            will-change: transform, opacity;
-        }
-
-        .tilt-card-wrapper:hover .premium-card { border-color: rgba(135, 103, 123, 0.3); }
-
-        .card-spotlight {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(350px circle at var(--mx, 0px) var(--my, 0px), rgba(255, 255, 255, 0.45), transparent 65%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .card-inner { position: relative; z-index: 2; transform: translateZ(40px); }
-
-        .card-icon-box {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: #FCFBFC;
-            border: 1px solid rgba(135, 103, 123, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 2rem;
-            color: var(--accent-primary);
-            font-size: 1.25rem;
-            box-shadow: 0 8px 16px rgba(135, 103, 123, 0.02);
-        }
-
-        .premium-card h3 {
-            font-family: var(--font-display);
-            font-size: 1.6rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .premium-card p {
-            font-size: 0.9rem;
-            line-height: 1.7;
-            color: var(--text-secondary);
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .card-stats {
-            margin-top: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            font-size: 0.8rem;
-            color: var(--accent-primary);
-            font-weight: 600;
-            flex-wrap: wrap;
-        }
-
-        .card-stat-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--accent-glow);
-            display: inline-block;
-        }
-
-        /* Skeleton cards */
-        .skeleton-card .card-icon-box { background: rgba(135, 103, 123, 0.08); animation: pulse 1.5s infinite; }
-        .skeleton-card h3 { background: rgba(135, 103, 123, 0.08); border-radius: 8px; height: 1.6rem; width: 70%; animation: pulse 1.5s infinite; }
-        .skeleton-card p { background: rgba(135, 103, 123, 0.05); border-radius: 6px; height: 3.5rem; width: 100%; animation: pulse 1.5s infinite; }
-        .skeleton-card .card-stats { background: rgba(135, 103, 123, 0.05); border-radius: 6px; height: 1rem; width: 60%; animation: pulse 1.5s infinite; }
-
-        @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
-
-        /* Team */
-        .members-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .member-card {
-            text-decoration: none;
-            color: inherit;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.75rem;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-
-        .member-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(135, 103, 123, 0.25);
-        }
-
-        .member-card img { width: 88px; height: 88px; border-radius: 50%; object-fit: cover; }
-        .member-card h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; }
-        .member-card .member-bio { color: var(--text-secondary); font-size: 0.8rem; text-align: center; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .member-card .member-meta { display: flex; gap: 1rem; font-size: 0.75rem; color: var(--accent-primary); font-weight: 600; }
-        .founder-badge { background: var(--accent-primary); color: white; padding: 0.2rem 0.8rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600; }
-
-        /* Footer */
-        .light-footer {
-            position: relative;
-            width: 100%;
-            max-width: 1200px;
-            margin: 8rem auto 0 auto;
-            padding: 4rem 2rem;
-            border-top: 1px solid rgba(135, 103, 123, 0.08);
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 4rem;
-            align-items: flex-start;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .footer-brand-side { display: flex; flex-direction: column; gap: 1rem; }
-        .footer-brand-logo { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); text-decoration: none; letter-spacing: -0.02em; }
-        .footer-tagline { font-size: 0.85rem; line-height: 1.5; color: var(--text-secondary); max-width: 240px; }
-        .footer-links-matrix { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
-        .footer-column { display: flex; flex-direction: column; gap: 1rem; }
-        .footer-header { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-primary); }
-        .footer-item { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: color 0.25s ease; }
-        .footer-item:hover { color: var(--text-primary); }
-        .footer-bottom-bar { grid-column: 1 / -1; padding-top: 2rem; border-top: 1px solid rgba(135, 103, 123, 0.04); display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-secondary); }
-
-        /* Keyboard hint */
-        .kbd-hint {
-            position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
-            z-index: 50;
-            background: rgba(252, 251, 252, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(135, 103, 123, 0.1);
-            border-radius: 100px;
-            padding: 0.5rem 1rem;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            letter-spacing: 0.04em;
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-        }
-
-        .kbd-hint.visible { opacity: 1; }
-        .kbd-hint kbd { background: var(--text-primary); color: #FCFBFC; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.65rem; margin: 0 0.15rem; }
-
-        @media (max-width: 768px) {
-            .nav-header,
-            .premium-card,
-            .mobile-menu-overlay {
-                backdrop-filter: none;
-                -webkit-backdrop-filter: none;
-                background: rgba(255, 255, 255, 0.92);
-            }
-            .kbd-hint { display: none; }
-            .global-spotlight { display: none; }
-        }
-
-        @media (max-width: 968px) {
-            .nav-menu,
-            .nav-actions .nav-cta { display: none; }
-            .nav-header { padding: 0.6rem 1.5rem; }
-            .dashboard-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-            .hero-footer-row { flex-direction: column; align-items: flex-start; gap: 2rem; }
-            .light-footer { grid-template-columns: 1fr; gap: 3rem; margin-top: 6rem; }
-            .footer-links-matrix { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-            section { padding: 5rem 1.5rem; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050505">
+  <meta name="description" content="The Ace Base — open source projects, experiments, and developer tools.">
+
+  <title>The Ace Base</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Animation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+
+  <!-- Reicon -->
+  <script src="https://unpkg.com/reicon/cdn/reicon.js"></script>
+
+  <style>
+    /* ================================================================
+       RESET
+       ================================================================ */
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #050505;
+      --bg-soft: #0a0a0a;
+      --card: #101010;
+      --card-hover: #151515;
+
+      --border: rgba(255, 255, 255, 0.1);
+      --border-soft: rgba(255, 255, 255, 0.07);
+
+      --text: #f5f5f5;
+      --text-muted: #858585;
+      --text-dim: #666;
+
+      --font-display: "Space Grotesk", sans-serif;
+      --font-body: "Lexend", sans-serif;
+
+      --content-width: 1200px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      min-width: 320px;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    .nav-logo-text,
+    .contributor-name,
+    .footer-brand-logo {
+      font-family: var(--font-display);
+    }
+
+    /* ================================================================
+       BACKGROUND
+       ================================================================ */
+
+    .bg-viewport {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          #151515 0%,
+          #080808 45%,
+          #030303 100%
+        );
+    }
+
+    .architectural-backdrop {
+      position: absolute;
+      inset: 0;
+      opacity: 0.55;
+
+      background-image:
+        linear-gradient(
+          rgba(255, 255, 255, 0.055) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.055) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          45deg,
+          transparent 49.5%,
+          rgba(255, 255, 255, 0.025) 50%,
+          transparent 50.5%
+        );
+
+      background-size:
+        80px 80px,
+        80px 80px,
+        160px 160px;
+
+      mask-image:
+        radial-gradient(
+          ellipse at center,
+          black 0%,
+          black 55%,
+          transparent 100%
+        );
+
+      -webkit-mask-image:
+        radial-gradient(
+          ellipse at center,
+          black 0%,
+          black 55%,
+          transparent 100%
+        );
+    }
+
+    .grain-overlay {
+      position: absolute;
+      inset: 0;
+      opacity: 0.025;
+
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    .ambient-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(180px);
+      opacity: 0.16;
+    }
+
+    .glow-top {
+      top: -20%;
+      right: 10%;
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.2),
+        transparent 70%
+      );
+    }
+
+    .glow-bottom {
+      bottom: 5%;
+      left: -10%;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.1),
+        transparent 70%
+      );
+    }
+
+    .urban-grid {
+      position: absolute;
+      inset: 0;
+
+      background-image:
+        linear-gradient(
+          rgba(255, 255, 255, 0.025) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.025) 1px,
+          transparent 1px
+        );
+
+      background-size: 40px 40px;
+
+      mask-image:
+        radial-gradient(
+          circle at center,
+          black 20%,
+          transparent 85%
+        );
+
+      -webkit-mask-image:
+        radial-gradient(
+          circle at center,
+          black 20%,
+          transparent 85%
+        );
+    }
+
+    #fx-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    /* ================================================================
+       GLOBAL SPOTLIGHT / CURSOR
+       ================================================================ */
+
+    .global-spotlight {
+      position: fixed;
+      z-index: 3;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.035) 0%,
+          rgba(255, 255, 255, 0.015) 30%,
+          transparent 70%
+        );
+
+      transform: translate(-50%, -50%);
+      transition: opacity 0.4s;
+    }
+
+    .custom-cursor,
+    .custom-cursor-aura {
+      position: fixed;
+      pointer-events: none;
+      display: none;
+      transform: translate(-50%, -50%);
+    }
+
+    .custom-cursor {
+      width: 6px;
+      height: 6px;
+      z-index: 9999;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .custom-cursor-aura {
+      width: 34px;
+      height: 34px;
+      z-index: 9998;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+    }
+
+    @media (pointer: fine) {
+      .custom-cursor,
+      .custom-cursor-aura {
+        display: block;
+      }
+    }
+
+    /* ================================================================
+       NAVIGATION
+       ================================================================ */
+
+    .nav-header {
+      position: fixed;
+      top: 1.5rem;
+      left: 50%;
+      z-index: 100;
+
+      width: min(
+        calc(100% - 3rem),
+        1140px
+      );
+
+      transform:
+        translateX(-50%)
+        translateY(-50px);
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0.75rem 2rem;
+
+      background: rgba(12, 12, 12, 0.72);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+
+      box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.04);
+
+      opacity: 0;
+      transition:
+        padding 0.35s,
+        background 0.35s;
+    }
+
+    .nav-header.scrolled {
+      padding: 0.45rem 1.3rem;
+      background: rgba(10, 10, 10, 0.94);
+    }
+
+    .nav-identity {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      color: #fff;
+      text-decoration: none;
+      min-width: 0;
+    }
+
+    .nav-logo-icon {
+      width: 25px;
+      height: 25px;
+      flex: 0 0 25px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .nav-logo-text {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      white-space: nowrap;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      position: relative;
+      color: #858585;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 1.5px;
+      background: #fff;
+
+      transform: scaleX(0);
+      transform-origin: right;
+
+      transition: transform 0.25s;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: #fff;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+
+      padding: 0.65rem 1rem;
+
+      color: #050505;
+      background: #f2f2f2;
+
+      border: 0;
+      border-radius: 4px;
+
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+
+      will-change: transform;
+    }
+
+    .hamburger-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      padding: 0.5rem;
+
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .hamburger-line {
+      width: 22px;
+      height: 1.5px;
+      background: #fff;
+    }
+
+    /* ================================================================
+       MOBILE MENU
+       ================================================================ */
+
+    .mobile-menu-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+
+      display: flex;
+      align-items: center;
+
+      padding: 4rem;
+
+      background: rgba(8, 8, 8, 0.98);
+
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+
+      transition:
+        opacity 0.35s,
+        visibility 0.35s;
+    }
+
+    .mobile-menu-overlay.is-active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .mobile-menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+
+      list-style: none;
+
+      transform: translateY(30px);
+      opacity: 0;
+
+      transition:
+        transform 0.4s,
+        opacity 0.4s;
+    }
+
+    .mobile-menu-overlay.is-active .mobile-menu-list {
+      transform: none;
+      opacity: 1;
+    }
+
+    .mobile-menu-link {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 9vw, 3.5rem);
+      font-weight: 600;
+      line-height: 1;
+      text-decoration: none;
+    }
+
+    /* ================================================================
+       LAYOUT
+       ================================================================ */
+
+    .app-viewport {
+      position: relative;
+      z-index: 5;
+    }
+
+    section,
+    .light-footer {
+      width: min(
+        calc(100% - 3rem),
+        var(--content-width)
+      );
+
+      margin-inline: auto;
+    }
+
+    section {
+      padding-block: 8rem;
+    }
+
+    .hero-container {
+      min-height: 100vh;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+
+      padding-top: 10rem;
+    }
+
+    /* ================================================================
+       HERO
+       ================================================================ */
+
+    .hero-badge-container {
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      padding: 0.5rem 0.9rem;
+
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 4px;
+
+      background: rgba(255, 255, 255, 0.045);
+
+      color: var(--text);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .hero-heading {
+      max-width: 100%;
+
+      margin-bottom: 2.5rem;
+
+      color: #fff;
+
+      font-family: var(--font-display);
+      font-size: clamp(
+        3rem,
+        8vw,
+        7rem
+      );
+
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.055em;
+    }
+
+    .hero-heading > span {
+      display: block;
+      overflow: hidden;
+    }
+
+    .hero-heading .title-line {
+      display: block;
+      opacity: 0;
+      transform: translateY(80px);
+    }
+
+    .hero-heading em {
+      color: #999;
+      font-style: normal;
+      font-weight: 300;
+    }
+
+    .hero-footer-row {
+      width: 100%;
+
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 3rem;
+
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .hero-desc {
+      max-width: 560px;
+
+      color: var(--text-muted);
+
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .scroll-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+
+      flex-shrink: 0;
+
+      color: var(--text-muted);
+
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .scroll-indicator-line {
+      position: relative;
+
+      width: 1px;
+      height: 60px;
+
+      overflow: hidden;
+
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .scroll-indicator-line::after {
+      content: "";
+
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 30px;
+
+      background: #fff;
+
+      animation:
+        scrollPulse 2s
+        cubic-bezier(0.65, 0, 0.35, 1)
+        infinite;
+    }
+
+    @keyframes scrollPulse {
+      0% {
+        transform: translateY(-100%);
+      }
+
+      80%,
+      100% {
+        transform: translateY(200%);
+      }
+    }
+
+    /* ================================================================
+       EDITORIAL
+       ================================================================ */
+
+    .editorial-container {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .editorial-quote-box {
+      max-width: 850px;
+      padding-left: 2rem;
+      border-left: 2px solid #fff;
+    }
+
+    .editorial-quote-en {
+      margin-bottom: 1rem;
+
+      color: #f5f5f5;
+
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 4vw, 2.5rem);
+      font-weight: 400;
+      line-height: 1.3;
+      letter-spacing: -0.025em;
+    }
+
+    .editorial-quote-sub {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* ================================================================
+       SECTION HEADERS
+       ================================================================ */
+
+    .section-title-row {
+      margin-bottom: 4rem;
+
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .section-title-row span {
+      display: block;
+
+      margin-bottom: 0.5rem;
+
+      color: #999;
+
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .section-title-row h2 {
+      color: #fff;
+
+      font-family: var(--font-display);
+      font-size: clamp(2.3rem, 6vw, 3.5rem);
+      font-weight: 600;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    /* ================================================================
+       CONTRIBUTOR SEGMENTS
+       ================================================================ */
+
+    .contributor-segments {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contributor-segment {
+      padding-block: 5rem;
+      border-top: 1px solid var(--border-soft);
+    }
+
+    .contributor-segment:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .contributor-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .contributor-avatar {
+      width: 56px;
+      height: 56px;
+
+      flex: 0 0 56px;
+
+      border: 2px solid var(--border);
+      border-radius: 50%;
+
+      object-fit: cover;
+    }
+
+    .contributor-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .contributor-name-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .contributor-name {
+      min-width: 0;
+
+      font-size: 1.35rem;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .contributor-name a {
+      color: #fff;
+      text-decoration: none;
+
+      overflow-wrap: anywhere;
+    }
+
+    .contributor-name a:hover {
+      color: #aaa;
+    }
+
+    .contributor-count {
+      margin-top: 0.35rem;
+
+      color: var(--text-muted);
+
+      font-size: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .contributor-bio {
+      max-width: 700px;
+      margin-top: 0.5rem;
+
+      color: var(--text-muted);
+
+      font-size: 0.8rem;
+      line-height: 1.6;
+
+      overflow-wrap: anywhere;
+    }
+
+    .founder-badge {
+      display: inline-flex;
+      align-items: center;
+
+      padding: 0.2rem 0.45rem;
+
+      color: #fff;
+
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    /* ================================================================
+       REPOSITORY GRID
+       ================================================================ */
+
+    .contributor-repositories {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+
+    .tilt-card-wrapper {
+      display: block;
+      min-width: 0;
+
+      color: inherit;
+      text-decoration: none;
+
+      outline: none;
+
+      will-change: transform;
+    }
+
+    .premium-card {
+      position: relative;
+
+      min-height: 230px;
+      height: 100%;
+
+      display: flex;
+      flex-direction: column;
+
+      overflow: hidden;
+
+      padding: 1.75rem;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(22, 22, 22, 0.95),
+          rgba(8, 8, 8, 0.95)
+        );
+
+      border: 1px solid var(--border);
+      border-radius: 4px;
+
+      box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.045);
+
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+
+      transition:
+        border-color 0.3s,
+        box-shadow 0.3s;
+    }
+
+    .tilt-card-wrapper:hover .premium-card {
+      border-color: rgba(255, 255, 255, 0.25);
+
+      box-shadow:
+        0 35px 90px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .card-spotlight {
+      position: absolute;
+      inset: 0;
+
+      border-radius: inherit;
+
+      pointer-events: none;
+
+      background:
+        radial-gradient(
+          350px circle at var(--mx, -100px) var(--my, -100px),
+          rgba(255, 255, 255, 0.08),
+          transparent 65%
+        );
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 2;
+
+      min-width: 0;
+
+      display: flex;
+      flex-direction: column;
+
+      height: 100%;
+    }
+
+    .card-icon-box {
+      width: 42px;
+      height: 42px;
+
+      flex: 0 0 42px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      margin-bottom: 1.25rem;
+
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+
+      color: #fff;
+    }
+
+    .card-icon-box re-icon {
+      display: block;
+    }
+
+    .premium-card h3 {
+      margin-bottom: 0.55rem;
+
+      color: #fff;
+
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.025em;
+
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .premium-card p {
+      max-width: 100%;
+
+      color: var(--text-muted);
+
+      font-size: 0.82rem;
+      line-height: 1.6;
+
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+
+      overflow: hidden;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .card-stats {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+
+      margin-top: auto;
+      padding-top: 1.5rem;
+
+      color: #888;
+
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .card-stats span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+
+      min-width: 0;
+    }
+
+    .card-stats .language {
+      color: #fff;
+    }
+
+    .card-stats re-icon {
+      display: block;
+      flex: 0 0 auto;
+    }
+
+    /* ================================================================
+       VIEW ALL
+       ================================================================ */
+
+    .view-all-repos {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+
+      margin-top: 1.25rem;
+      padding: 0.7rem 1rem;
+
+      color: #050505;
+      background: #f2f2f2;
+
+      border: 1px solid #f2f2f2;
+      border-radius: 3px;
+
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      text-transform: uppercase;
+
+      transition:
+        background 0.2s,
+        color 0.2s,
+        transform 0.2s;
+    }
+
+    .view-all-repos:hover {
+      color: #fff;
+      background: transparent;
+      transform: translateY(-2px);
+    }
+
+    /* ================================================================
+       PEOPLE
+       ================================================================ */
+
+    .members-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(220px, 1fr)
+        );
+
+      gap: 1.5rem;
+    }
+
+    .member-card {
+      min-width: 0;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      gap: 0.6rem;
+
+      padding: 1.75rem;
+
+      color: inherit;
+      text-align: center;
+      text-decoration: none;
+
+      background: rgba(14, 14, 14, 0.82);
+
+      border: 1px solid var(--border-soft);
+      border-radius: 4px;
+
+      transition:
+        transform 0.3s,
+        border-color 0.3s;
+    }
+
+    .member-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .member-card img {
+      width: 72px;
+      height: 72px;
+
+      flex: 0 0 72px;
+
+      border: 2px solid var(--border);
+      border-radius: 50%;
+
+      object-fit: cover;
+    }
+
+    .member-card h3 {
+      max-width: 100%;
+
+      color: #fff;
+
+      font-size: 1rem;
+      line-height: 1.3;
+
+      overflow-wrap: anywhere;
+    }
+
+    .member-bio {
+      width: 100%;
+
+      color: var(--text-muted);
+
+      font-size: 0.76rem;
+      line-height: 1.5;
+
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+
+      overflow: hidden;
+      overflow-wrap: anywhere;
+    }
+
+    .member-meta {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+
+      width: 100%;
+
+      color: #888;
+
+      font-size: 0.68rem;
+      font-weight: 600;
+    }
+
+    .member-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+
+      overflow-wrap: anywhere;
+    }
+
+    /* ================================================================
+       FOOTER
+       ================================================================ */
+
+    .light-footer {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+
+      margin-top: 8rem;
+      padding-block: 4rem;
+
+      border-top: 1px solid var(--border-soft);
+
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .footer-brand-side {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .footer-brand-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+
+      width: fit-content;
+
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .footer-brand-logo img {
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
+    }
+
+    .footer-tagline {
+      max-width: 260px;
+
+      color: var(--text-muted);
+
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .footer-links-matrix {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-column {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      min-width: 0;
+    }
+
+    .footer-header {
+      color: #fff;
+
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .footer-item {
+      color: #777;
+
+      font-size: 0.8rem;
+      font-weight: 500;
+
+      text-decoration: none;
+
+      overflow-wrap: anywhere;
+
+      transition: color 0.2s;
+    }
+
+    .footer-item:hover {
+      color: #fff;
+    }
+
+    .footer-bottom-bar {
+      grid-column: 1 / -1;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+
+      padding-top: 2rem;
+
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+
+      color: #666;
+
+      font-size: 0.72rem;
+    }
+
+    /* ================================================================
+       KEYBOARD HINT
+       ================================================================ */
+
+    .kbd-hint {
+      position: fixed;
+      right: 1.5rem;
+      bottom: 1.5rem;
+      z-index: 50;
+
+      padding: 0.5rem 1rem;
+
+      color: #858585;
+
+      background: rgba(12, 12, 12, 0.8);
+
+      border: 1px solid var(--border-soft);
+      border-radius: 3px;
+
+      font-size: 0.68rem;
+      font-weight: 600;
+
+      opacity: 0;
+
+      transition: opacity 0.4s;
+
+      pointer-events: none;
+    }
+
+    .kbd-hint.visible {
+      opacity: 1;
+    }
+
+    .kbd-hint kbd {
+      padding: 0.15rem 0.4rem;
+
+      color: #050505;
+      background: #f2f2f2;
+
+      border-radius: 2px;
+
+      font-size: 0.62rem;
+    }
+
+    /* ================================================================
+       LOADING
+       ================================================================ */
+
+    .loading-state {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      padding: 1rem 0;
+    }
+
+    .loading-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .loading-avatar,
+    .loading-line,
+    .loading-card {
+      background: rgba(255, 255, 255, 0.04);
+      animation: loadingPulse 1.5s infinite;
+    }
+
+    .loading-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+    }
+
+    .loading-line {
+      height: 1rem;
+      border-radius: 3px;
+    }
+
+    .loading-line.large {
+      width: 180px;
+    }
+
+    .loading-line.small {
+      width: 120px;
+      margin-top: 0.5rem;
+    }
+
+    .loading-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+
+    .loading-card {
+      height: 220px;
+      border-radius: 4px;
+    }
+
+    @keyframes loadingPulse {
+      50% {
+        opacity: 0.45;
+      }
+    }
+
+    /* ================================================================
+       RESPONSIVE
+       ================================================================ */
+
+    @media (max-width: 968px) {
+      .nav-menu,
+      .nav-actions .nav-cta {
+        display: none;
+      }
+
+      .nav-header {
+        padding: 0.6rem 1.5rem;
+      }
+
+      .contributor-repositories {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-footer-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .light-footer {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-links-matrix {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-header {
+        width: calc(100% - 2rem);
+      }
+
+      section,
+      .light-footer {
+        width: calc(100% - 2rem);
+      }
+
+      section {
+        padding-block: 5rem;
+      }
+
+      .hero-container {
+        padding-top: 8rem;
+      }
+
+      .hero-heading {
+        font-size: clamp(3rem, 14vw, 5rem);
+      }
+
+      .editorial-quote-box {
+        padding-left: 1.25rem;
+      }
+
+      .contributor-segment {
+        padding-block: 3.5rem;
+      }
+
+      .members-grid {
+        grid-template-columns:
+          repeat(
+            auto-fit,
+            minmax(160px, 1fr)
+          );
+      }
+
+      .light-footer {
+        margin-top: 5rem;
+      }
+
+      .kbd-hint,
+      .global-spotlight {
+        display: none;
+      }
+
+      .nav-header,
+      .premium-card,
+      .mobile-menu-overlay {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(10, 10, 10, 0.96);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .nav-logo-text {
+        font-size: 1.05rem;
+      }
+
+      .hero-heading {
+        letter-spacing: -0.06em;
+      }
+
+      .contributor-header {
+        gap: 0.9rem;
+      }
+
+      .contributor-avatar {
+        width: 48px;
+        height: 48px;
+        flex-basis: 48px;
+      }
+
+      .footer-links-matrix {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+
+      .loading-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-    <div class="global-spotlight" id="global-spotlight"></div>
-    <div class="custom-cursor" id="cursor-dot"></div>
-    <div class="custom-cursor-aura" id="cursor-aura"></div>
-    <div class="kbd-hint" id="kbd-hint">Press <kbd>G</kbd> GitHub · <kbd>R</kbd> Repos</div>
+  <!-- ================================================================
+       OVERLAYS
+       ================================================================ -->
 
-    <div class="bg-viewport" id="bg-viewport">
-        <div class="architectural-backdrop" id="arch-bg"></div>
-        <div class="grain-overlay"></div>
-        <div class="ambient-glow glow-frozen" id="glow-fr"></div>
-        <div class="ambient-glow glow-warm"></div>
-        <div class="urban-grid"></div>
-        <canvas id="fx-canvas"></canvas>
-    </div>
+  <div class="global-spotlight" id="global-spotlight"></div>
 
-    <nav class="nav-header" id="main-nav">
-        <a href="#" class="nav-identity">
-            <span class="nav-logo-icon">💮</span>
-            <span class="nav-logo-text">The Ace Base</span>
+  <div class="custom-cursor" id="cursor-dot"></div>
+  <div class="custom-cursor-aura" id="cursor-aura"></div>
+
+  <div class="kbd-hint" id="kbd-hint">
+    <kbd>G</kbd> GitHub ·
+    <kbd>R</kbd> Archive
+  </div>
+
+  <!-- ================================================================
+       BACKGROUND
+       ================================================================ -->
+
+  <div class="bg-viewport">
+    <div class="architectural-backdrop" id="arch-bg"></div>
+    <div class="grain-overlay"></div>
+    <div class="ambient-glow glow-top" id="glow-top"></div>
+    <div class="ambient-glow glow-bottom"></div>
+    <div class="urban-grid"></div>
+
+    <canvas id="fx-canvas"></canvas>
+  </div>
+
+  <!-- ================================================================
+       NAV
+       ================================================================ -->
+
+  <nav class="nav-header" id="main-nav">
+    <a href="#" class="nav-identity" aria-label="The Ace Base home">
+      <img
+        src="./icon.png"
+        class="nav-logo-icon"
+        alt=""
+        width="25"
+        height="25"
+      >
+
+      <span class="nav-logo-text">
+        The Ace Base
+      </span>
+    </a>
+
+    <ul class="nav-menu">
+      <li>
+        <a
+          href="#archive-section"
+          class="nav-link"
+          data-section="archive-section"
+        >
+          Archive
         </a>
-        <ul class="nav-menu">
-            <li><a href="#repositories-section" class="nav-link" data-section="repositories-section">Repositories</a></li>
-            <li><a href="#team-section" class="nav-link" data-section="team-section">People</a></li>
-            <li><a href="https://blog.ace-base.indevs.in" class="nav-link" target="_blank">Blog</a></li>
-            <li><a href="https://github.com/The-Ace-Base" class="nav-link" target="_blank">Organization</a></li>
-        </ul>
-        <div class="nav-actions">
-            <a href="https://github.com/The-Ace-Base" class="nav-cta magnetic-target" target="_blank">Open GitHub</a>
-            <button class="hamburger-btn" aria-label="Toggle Menu" aria-expanded="false" id="nav-toggle">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
+      </li>
+
+      <li>
+        <a
+          href="#team-section"
+          class="nav-link"
+          data-section="team-section"
+        >
+          People
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="https://blog.ace-base.indevs.in"
+          class="nav-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Blog
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="https://github.com/The-Ace-Base"
+          class="nav-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Organization
+        </a>
+      </li>
+    </ul>
+
+    <div class="nav-actions">
+      <a
+        href="https://github.com/The-Ace-Base"
+        class="nav-cta magnetic-target"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <re-icon icon="github" size="15" weight="outline"></re-icon>
+        GitHub
+      </a>
+
+      <button
+        class="hamburger-btn"
+        id="nav-toggle"
+        type="button"
+        aria-label="Toggle navigation"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ================================================================
+       MOBILE MENU
+       ================================================================ -->
+
+  <div
+    class="mobile-menu-overlay"
+    id="mobile-menu"
+    aria-hidden="true"
+  >
+    <ul class="mobile-menu-list">
+      <li>
+        <a href="#archive-section" class="mobile-menu-link">
+          Archive
+        </a>
+      </li>
+
+      <li>
+        <a href="#team-section" class="mobile-menu-link">
+          People
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="https://blog.ace-base.indevs.in"
+          class="mobile-menu-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Blog
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="https://github.com/The-Ace-Base"
+          class="mobile-menu-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Organization
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ================================================================
+       MAIN
+       ================================================================ -->
+
+  <main class="app-viewport">
+
+    <!-- Hero -->
+    <section class="hero-container" id="hero-sec">
+
+      <div
+        class="hero-badge-container"
+        id="hero-bdg"
+      >
+        <div class="hero-badge">
+          Open source
         </div>
-    </nav>
+      </div>
 
-    <div class="mobile-menu-overlay" id="mobile-menu">
-        <ul class="mobile-menu-list">
-            <li><a href="#repositories-section" class="mobile-menu-link">Repositories</a></li>
-            <li><a href="#team-section" class="mobile-menu-link">People</a></li>
-            <li><a href="https://blog.ace-base.indevs.in" class="mobile-menu-link" target="_blank">Blog</a></li>
-            <li><a href="https://github.com/The-Ace-Base" class="mobile-menu-link" target="_blank">Organization</a></li>
-        </ul>
-    </div>
+      <h1 class="hero-heading">
+        <span>
+          <span class="title-line">
+            The Ace Base
+          </span>
+        </span>
 
-    <div class="app-viewport">
-        <section class="hero-container" id="hero-sec">
-            <div class="hero-badge-container" id="hero-bdg">
-                <div class="hero-badge"><span>Open Source</span></div>
-            </div>
-            <h1 class="hero-heading">
-                <span><span class="title-line">The Ace Base</span></span><br>
-                <span><span class="title-line">Built with <em>Thinking</em>.</span></span>
-            </h1>
-            <div class="hero-footer-row" id="hero-foot">
-                <p class="hero-desc">Open source software, experiments, and developer tools built with precision and simplicity.</p>
-                <div class="scroll-indicator"><span>Scroll</span><div class="scroll-indicator-line"></div></div>
-            </div>
-        </section>
+        <span>
+          <span class="title-line">
+            Built with <em>curiosity</em>.
+          </span>
+        </span>
+      </h1>
 
-        <section class="editorial-container" id="edit-sec">
-            <div class="editorial-quote-box">
-                <p class="editorial-quote-en">"Clean systems. Fast software. Thoughtful engineering."</p>
-                <p class="editorial-quote-sub">Every project is built for clarity, performance, and long-term maintainability.</p>
-            </div>
-        </section>
+      <div
+        class="hero-footer-row"
+        id="hero-foot"
+      >
+        <p class="hero-desc">
+          Open source projects, experiments, and tools made by people who
+          enjoy building things and seeing where they go.
+        </p>
 
-        <section id="repositories-section">
-            <div class="section-title-row" id="title-row">
-                <span>Production Grade Core</span>
-                <h2>Active Repositories</h2>
-            </div>
-            <div class="dashboard-grid" id="card-matrix">
-                <!-- Skeleton placeholders (will be replaced by real data) -->
-                <div class="tilt-card-wrapper skeleton-card">
-                    <div class="premium-card" style="opacity:1;transform:none;">
-                        <div class="card-inner">
-                            <div class="card-icon-box"></div>
-                            <h3></h3>
-                            <p></p>
-                            <div class="card-stats"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tilt-card-wrapper skeleton-card">
-                    <div class="premium-card" style="opacity:1;transform:none;">
-                        <div class="card-inner">
-                            <div class="card-icon-box"></div>
-                            <h3></h3>
-                            <p></p>
-                            <div class="card-stats"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tilt-card-wrapper skeleton-card">
-                    <div class="premium-card" style="opacity:1;transform:none;">
-                        <div class="card-inner">
-                            <div class="card-icon-box"></div>
-                            <h3></h3>
-                            <p></p>
-                            <div class="card-stats"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div class="scroll-indicator">
+          <span>Scroll</span>
 
-        <section id="team-section">
-            <div class="section-title-row">
-                <span>People</span>
-                <h2>Organization Members</h2>
-            </div>
-            <div id="org-members" class="members-grid">
-                <a class="member-card" href="https://github.com/aceyash-dev" target="_blank" rel="noopener">
-                    <img src="https://github.com/aceyash-dev.png" alt="aceyash-dev" loading="lazy"
-                    onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23ddd%22/%3E%3C/svg%3E'">
-                    <h3>aceyash-dev</h3>
-                    <span class="founder-badge">Founder</span>
-                </a>
-                <p id="members-loading" style="grid-column:1/-1;text-align:center;color:var(--text-secondary);">Loading other public members…</p>
-            </div>
-        </section>
+          <div class="scroll-indicator-line"></div>
+        </div>
+      </div>
+    </section>
 
-        <footer class="light-footer" id="main-foot">
-            <div class="footer-brand-side">
-                <a href="#" class="footer-brand-logo"><span>💮</span> The Ace Base</a>
-                <p class="footer-tagline">Building open source software for developers.</p>
-            </div>
-            <div class="footer-links-matrix">
-                <div class="footer-column">
-                    <span class="footer-header">Ecosystem</span>
-                    <a href="https://github.com/The-Ace-Base" class="footer-item" target="_blank">GitHub Org</a>
-                </div>
-                <div class="footer-column">
-                    <span class="footer-header">Software</span>
-                    <a href="#repositories-section" class="footer-item">Repositories</a>
-                </div>
-                <div class="footer-column">
-                    <span class="footer-header">Content</span>
-                    <a href="https://blog.ace-base.indevs.in" class="footer-item" target="_blank">Blog</a>
-                </div>
-                <div class="footer-column">
-                    <span class="footer-header">People</span>
-                    <a href="#team-section" class="footer-item">Members</a>
-                </div>
-            </div>
-            <div class="footer-bottom-bar">
-                <span>&copy; 2026 The Ace Base</span>
-                <span>Curated Open Source</span>
-            </div>
-        </footer>
-    </div>
+    <!-- Editorial -->
+    <section
+      class="editorial-container"
+      id="edit-sec"
+    >
+      <div class="editorial-quote-box">
+        <p class="editorial-quote-en">
+          "Make useful things. Keep them understandable."
+        </p>
 
-    <script>
-        /* ====================================================================== */
-        /*  LENIS + SCROLLTRIGGER — Single RAF, mobile-aware                     */
-        /* ====================================================================== */
-        gsap.registerPlugin(ScrollTrigger);
+        <p class="editorial-quote-sub">
+          We care about software that is fast, readable, and pleasant to
+          work on after the first version is long gone.
+        </p>
+      </div>
+    </section>
 
-        const isMobile = window.innerWidth < 768;
-        const lenis = new Lenis({
-            duration: 1.1,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            smoothWheel: !isMobile,
-            smoothTouch: false
+    <!-- Archive -->
+    <section id="archive-section">
+
+      <div
+        class="section-title-row"
+        id="title-row"
+      >
+        <span>Contributor network</span>
+        <h2>Open Source Archive</h2>
+      </div>
+
+      <div id="contributor-segments">
+        <div class="loading-state">
+          <div class="loading-row">
+            <div class="loading-avatar"></div>
+
+            <div>
+              <div class="loading-line large"></div>
+              <div class="loading-line small"></div>
+            </div>
+          </div>
+
+          <div class="loading-grid">
+            <div class="loading-card"></div>
+            <div class="loading-card"></div>
+            <div class="loading-card"></div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- People -->
+    <section id="team-section">
+
+      <div class="section-title-row">
+        <span>People</span>
+        <h2>Contributors</h2>
+      </div>
+
+      <div
+        id="org-members"
+        class="members-grid"
+      >
+        <p
+          id="members-loading"
+          style="
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--text-muted);
+          "
+        >
+          Loading contributors…
+        </p>
+      </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer
+      class="light-footer"
+      id="main-foot"
+    >
+
+      <div class="footer-brand-side">
+
+        <a href="#" class="footer-brand-logo">
+          <img
+            src="./icon.png"
+            alt=""
+            width="22"
+            height="22"
+          >
+
+          <span>The Ace Base</span>
+        </a>
+
+        <p class="footer-tagline">
+          Open source projects and experiments from the people behind
+          The Ace Base.
+        </p>
+
+      </div>
+
+      <div class="footer-links-matrix">
+
+        <div class="footer-column">
+          <span class="footer-header">
+            Ecosystem
+          </span>
+
+          <a
+            href="https://github.com/The-Ace-Base"
+            class="footer-item"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+        </div>
+
+        <div class="footer-column">
+          <span class="footer-header">
+            Software
+          </span>
+
+          <a
+            href="#archive-section"
+            class="footer-item"
+          >
+            Archive
+          </a>
+        </div>
+
+        <div class="footer-column">
+          <span class="footer-header">
+            Content
+          </span>
+
+          <a
+            href="https://blog.ace-base.indevs.in"
+            class="footer-item"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Blog
+          </a>
+        </div>
+
+        <div class="footer-column">
+          <span class="footer-header">
+            People
+          </span>
+
+          <a
+            href="#team-section"
+            class="footer-item"
+          >
+            Contributors
+          </a>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom-bar">
+        <span>
+          © 2026 The Ace Base
+        </span>
+
+        <span>
+          Open source, maintained with care.
+        </span>
+      </div>
+
+    </footer>
+
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+
+      /* ================================================================
+         CONFIG
+         ================================================================ */
+
+      const CONFIG = {
+        org: "The-Ace-Base",
+        founder: "aceyash-dev",
+
+        githubApi: "https://api.github.com",
+
+        cacheKey: "ace-base.github.network.v2",
+
+        // 24 hours.
+        cacheTtl: 24 * 60 * 60 * 1000,
+
+        maxRepoPages: 10,
+        maxContributorPages: 5,
+        concurrency: 6
+      };
+
+      const GITHUB_HEADERS = {
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28"
+      };
+
+      /* ================================================================
+         HELPERS
+         ================================================================ */
+
+      const $ = (selector, parent = document) =>
+        parent.querySelector(selector);
+
+      const $$ = (selector, parent = document) =>
+        [...parent.querySelectorAll(selector)];
+
+      const isMobile =
+        window.matchMedia("(max-width: 767px)").matches;
+
+      const isDesktop =
+        window.matchMedia("(pointer: fine)").matches;
+
+      /* ================================================================
+         LENIS
+         ================================================================ */
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      let lenis = null;
+      const useLenis = !isMobile;
+
+      if (useLenis) {
+        lenis = new Lenis({
+          duration: 1.1,
+          easing: t =>
+            Math.min(
+              1,
+              1.001 - Math.pow(2, -10 * t)
+            ),
+          smoothWheel: true,
+          smoothTouch: false
         });
 
-        if (isMobile) {
-            lenis.destroy();
-        }
+        lenis.on(
+          "scroll",
+          ScrollTrigger.update
+        );
 
-        const useLenis = !isMobile;
-        if (useLenis) {
-            lenis.on('scroll', ScrollTrigger.update);
-            function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-            requestAnimationFrame(raf);
-        }
+        const raf = time => {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        };
 
-        // Scroll-to helper
-        function scrollToTarget(target) {
-            if (useLenis && lenis && typeof lenis.scrollTo === 'function') {
-                lenis.scrollTo(target, { offset: -100, duration: 1 });
+        requestAnimationFrame(raf);
+      }
+
+      function scrollToTarget(target) {
+        const element =
+          typeof target === "string"
+            ? $(target)
+            : target;
+
+        if (!element) return;
+
+        if (
+          useLenis &&
+          lenis &&
+          typeof lenis.scrollTo === "function"
+        ) {
+          lenis.scrollTo(element, {
+            offset: -100,
+            duration: 1
+          });
+        } else {
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }
+      }
+
+      $$('a[href^="#"]').forEach(link => {
+        link.addEventListener("click", event => {
+          const href =
+            link.getAttribute("href");
+
+          if (!href || href === "#") {
+            event.preventDefault();
+
+            if (useLenis) {
+              scrollToTarget(
+                document.body
+              );
             } else {
-                const el = typeof target === 'string' ? document.querySelector(target) : target;
-                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+              });
             }
-        }
 
-        document.querySelectorAll('a[href^="#"]').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) scrollToTarget(target);
-            });
+            return;
+          }
+
+          const target = $(href);
+
+          if (!target) return;
+
+          event.preventDefault();
+          scrollToTarget(target);
         });
+      });
 
-        /* ====================================================================== */
-        /*  GLOBAL SPOTLIGHT                                                     */
-        /* ====================================================================== */
-        const spotlight = document.getElementById('global-spotlight');
-        let spotlightActive = false;
-        document.addEventListener('mousemove', (e) => {
-            spotlight.style.left = e.clientX + 'px';
-            spotlight.style.top = e.clientY + 'px';
-            if (!spotlightActive) { spotlightActive = true; spotlight.style.opacity = '1'; }
+      /* ================================================================
+         GLOBAL SPOTLIGHT
+         ================================================================ */
+
+      const spotlight =
+        $("#global-spotlight");
+
+      let spotlightVisible = false;
+
+      if (isDesktop && spotlight) {
+        document.addEventListener(
+          "mousemove",
+          event => {
+            spotlight.style.left =
+              `${event.clientX}px`;
+
+            spotlight.style.top =
+              `${event.clientY}px`;
+
+            if (!spotlightVisible) {
+              spotlightVisible = true;
+              spotlight.style.opacity = "1";
+            }
+          },
+          { passive: true }
+        );
+
+        document.addEventListener(
+          "mouseleave",
+          () => {
+            spotlightVisible = false;
+            spotlight.style.opacity = "0";
+          }
+        );
+      }
+
+      /* ================================================================
+         KEYBOARD SHORTCUTS
+         ================================================================ */
+
+      const kbdHint =
+        $("#kbd-hint");
+
+      let kbdTimeout = null;
+
+      function flashKbd() {
+        if (!kbdHint) return;
+
+        kbdHint.classList.add("visible");
+
+        clearTimeout(kbdTimeout);
+
+        kbdTimeout = setTimeout(() => {
+          kbdHint.classList.remove(
+            "visible"
+          );
+        }, 2000);
+      }
+
+      document.addEventListener(
+        "keydown",
+        event => {
+          const target = event.target;
+
+          if (
+            target instanceof HTMLElement &&
+            (
+              target.tagName === "INPUT" ||
+              target.tagName === "TEXTAREA" ||
+              target.isContentEditable
+            )
+          ) {
+            return;
+          }
+
+          if (
+            event.key === "g" ||
+            event.key === "G"
+          ) {
+            window.open(
+              `https://github.com/${CONFIG.org}`,
+              "_blank",
+              "noopener,noreferrer"
+            );
+
+            flashKbd();
+          }
+
+          if (
+            event.key === "r" ||
+            event.key === "R"
+          ) {
+            scrollToTarget(
+              "#archive-section"
+            );
+
+            flashKbd();
+          }
+        }
+      );
+
+      setTimeout(() => {
+        flashKbd();
+
+        setTimeout(() => {
+          kbdHint?.classList.remove(
+            "visible"
+          );
+        }, 4000);
+      }, 3000);
+
+      /* ================================================================
+         CANVAS PARTICLES
+         ================================================================ */
+
+      const canvas =
+        $("#fx-canvas");
+
+      const ctx =
+        canvas?.getContext("2d");
+
+      let particles = [];
+      let visible = true;
+
+      document.addEventListener(
+        "visibilitychange",
+        () => {
+          visible = !document.hidden;
+        }
+      );
+
+      class CosmicParticle {
+        constructor() {
+          this.reset(true);
+        }
+
+        reset(initial = false) {
+          this.x =
+            Math.random() *
+            window.innerWidth;
+
+          this.y = initial
+            ? Math.random() *
+              window.innerHeight
+            : -10;
+
+          this.size =
+            Math.random() * 2 +
+            0.5;
+
+          this.speedY =
+            Math.random() * 0.6 +
+            0.2;
+
+          this.speedX =
+            Math.random() * 0.3 -
+            0.15;
+
+          this.opacity =
+            Math.random() * 0.4 +
+            0.1;
+
+          this.wobble =
+            Math.random() * 0.02;
+
+          this.wobbleInc = 0;
+        }
+
+        update() {
+          this.y += this.speedY;
+
+          this.x +=
+            this.speedX +
+            Math.sin(this.wobbleInc) *
+              0.2;
+
+          this.wobbleInc +=
+            this.wobble;
+
+          if (
+            this.y >
+              window.innerHeight + 20 ||
+            this.x >
+              window.innerWidth + 20 ||
+            this.x < -20
+          ) {
+            this.reset();
+          }
+        }
+
+        draw() {
+          ctx.beginPath();
+
+          ctx.arc(
+            this.x,
+            this.y,
+            this.size,
+            0,
+            Math.PI * 2
+          );
+
+          ctx.fillStyle =
+            `rgba(255,255,255,${this.opacity})`;
+
+          ctx.fill();
+        }
+      }
+
+      function maxParticles() {
+        return isMobile ? 35 : 80;
+      }
+
+      function resizeCanvas() {
+        if (!canvas || !ctx) return;
+
+        const dpr =
+          Math.min(
+            window.devicePixelRatio || 1,
+            1.5
+          );
+
+        canvas.width =
+          window.innerWidth * dpr;
+
+        canvas.height =
+          window.innerHeight * dpr;
+
+        canvas.style.width =
+          `${window.innerWidth}px`;
+
+        canvas.style.height =
+          `${window.innerHeight}px`;
+
+        ctx.setTransform(
+          dpr,
+          0,
+          0,
+          dpr,
+          0,
+          0
+        );
+      }
+
+      function recreateParticles() {
+        particles = Array.from(
+          {
+            length: maxParticles()
+          },
+          () => new CosmicParticle()
+        );
+      }
+
+      resizeCanvas();
+      recreateParticles();
+
+      let resizeTimer;
+
+      window.addEventListener(
+        "resize",
+        () => {
+          clearTimeout(resizeTimer);
+
+          resizeTimer = setTimeout(() => {
+            resizeCanvas();
+            recreateParticles();
+          }, 150);
+        },
+        { passive: true }
+      );
+
+      /* ================================================================
+         CURSOR + RENDER LOOP
+         ================================================================ */
+
+      const cursorDot =
+        $("#cursor-dot");
+
+      const cursorAura =
+        $("#cursor-aura");
+
+      const mouse = {
+        x: -100,
+        y: -100
+      };
+
+      const aura = {
+        x: -100,
+        y: -100
+      };
+
+      if (isDesktop) {
+        window.addEventListener(
+          "mousemove",
+          event => {
+            mouse.x = event.clientX;
+            mouse.y = event.clientY;
+          },
+          { passive: true }
+        );
+      }
+
+      let cardWrappers = [];
+
+      function renderLoop(time) {
+        if (!visible) {
+          requestAnimationFrame(
+            renderLoop
+          );
+          return;
+        }
+
+        if (
+          time -
+            (renderLoop.lastTime || 0) <
+          16
+        ) {
+          requestAnimationFrame(
+            renderLoop
+          );
+          return;
+        }
+
+        renderLoop.lastTime = time;
+
+        if (ctx) {
+          ctx.clearRect(
+            0,
+            0,
+            window.innerWidth,
+            window.innerHeight
+          );
+
+          particles.forEach(
+            particle => {
+              particle.update();
+              particle.draw();
+            }
+          );
+        }
+
+        if (
+          isDesktop &&
+          cursorDot &&
+          cursorAura
+        ) {
+          cursorDot.style.transform =
+            `translate3d(${mouse.x}px,${mouse.y}px,0) translate(-50%,-50%)`;
+
+          aura.x +=
+            (mouse.x - aura.x) *
+            0.15;
+
+          aura.y +=
+            (mouse.y - aura.y) *
+            0.15;
+
+          cursorAura.style.transform =
+            `translate3d(${aura.x}px,${aura.y}px,0) translate(-50%,-50%)`;
+        }
+
+        cardWrappers.forEach(
+          wrapper => {
+            const tilt =
+              wrapper._tilt;
+
+            if (!tilt) return;
+
+            tilt.current.rx +=
+              (tilt.target.rx -
+                tilt.current.rx) *
+              0.2;
+
+            tilt.current.ry +=
+              (tilt.target.ry -
+                tilt.current.ry) *
+              0.2;
+
+            wrapper.style.transform =
+              `perspective(1600px)
+               rotateX(${tilt.current.rx}deg)
+               rotateY(${tilt.current.ry}deg)
+               scale(${wrapper._scale || 1})`;
+          }
+        );
+
+        requestAnimationFrame(
+          renderLoop
+        );
+      }
+
+      requestAnimationFrame(
+        renderLoop
+      );
+
+      /* ================================================================
+         CARD TILT
+         ================================================================ */
+
+      function attachCardListeners() {
+        cardWrappers =
+          $$(".tilt-card-wrapper");
+
+        if (!isDesktop) return;
+
+        cardWrappers.forEach(wrapper => {
+          if (wrapper._tilt) return;
+
+          const card =
+            $(".premium-card", wrapper);
+
+          if (!card) return;
+
+          wrapper._tilt = {
+            target: {
+              rx: 0,
+              ry: 0
+            },
+
+            current: {
+              rx: 0,
+              ry: 0
+            }
+          };
+
+          wrapper._scale = 1;
+
+          wrapper.addEventListener(
+            "mousemove",
+            event => {
+              const rect =
+                wrapper.getBoundingClientRect();
+
+              const mx =
+                event.clientX -
+                rect.left;
+
+              const my =
+                event.clientY -
+                rect.top;
+
+              card.style.setProperty(
+                "--mx",
+                `${mx}px`
+              );
+
+              card.style.setProperty(
+                "--my",
+                `${my}px`
+              );
+
+              const x =
+                mx / rect.width -
+                0.5;
+
+              const y =
+                my / rect.height -
+                0.5;
+
+              wrapper._tilt.target.rx =
+                -y * 10;
+
+              wrapper._tilt.target.ry =
+                x * 10;
+            },
+            { passive: true }
+          );
+
+          wrapper.addEventListener(
+            "mouseleave",
+            () => {
+              wrapper._tilt.target.rx = 0;
+              wrapper._tilt.target.ry = 0;
+              wrapper._scale = 1;
+            }
+          );
+
+          wrapper.addEventListener(
+            "mouseenter",
+            () => {
+              wrapper._scale = 1.015;
+            }
+          );
         });
-        document.addEventListener('mouseleave', () => { spotlight.style.opacity = '0'; spotlightActive = false; });
+      }
 
-        /* ====================================================================== */
-        /*  KEYBOARD SHORTCUTS                                                    */
-        /* ====================================================================== */
-        const kbdHint = document.getElementById('kbd-hint');
-        let kbdTimeout;
-        document.addEventListener('keydown', (e) => {
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
-            if (e.key === 'g' || e.key === 'G') { window.open('https://github.com/The-Ace-Base', '_blank'); flashKbd(); }
-            if (e.key === 'r' || e.key === 'R') { scrollToTarget('#repositories-section'); flashKbd(); }
-        });
-        function flashKbd() {
-            kbdHint.classList.add('visible');
-            clearTimeout(kbdTimeout);
-            kbdTimeout = setTimeout(() => kbdHint.classList.remove('visible'), 2000);
-        }
-        setTimeout(() => { kbdHint.classList.add('visible'); kbdTimeout = setTimeout(() => kbdHint.classList.remove('visible'), 4000); }, 3000);
+      /* ================================================================
+         GITHUB API
+         ================================================================ */
 
-        /* ====================================================================== */
-        /*  CANVAS PETALS – DPR-capped, visibility-aware, resize-safe             */
-        /* ====================================================================== */
-        const canvas = document.getElementById('fx-canvas');
-        const ctx = canvas.getContext('2d');
-        let petals = [];
-        let visible = true;
-        document.addEventListener('visibilitychange', () => { visible = !document.hidden; });
+      let repoAbortController = null;
 
-        function getMaxPetals() { return window.innerWidth < 768 ? 5 : 12; }
+      async function githubFetch(
+        url,
+        signal
+      ) {
+        const response =
+          await fetch(url, {
+            headers:
+              GITHUB_HEADERS,
+            signal
+          });
 
-        function resizeCanvas() {
-            const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
-            canvas.width = window.innerWidth * DPR;
-            canvas.height = window.innerHeight * DPR;
-            ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        if (!response.ok) {
+          throw new Error(
+            `GitHub API ${response.status}`
+          );
         }
 
-        function recreatePetals() {
-            petals.length = 0;
-            for (let i = 0; i < getMaxPetals(); i++) petals.push(new SakuraPetal());
+        return response.json();
+      }
+
+      async function fetchAllPages(
+        url,
+        signal,
+        maxPages
+      ) {
+        const results = [];
+
+        for (
+          let page = 1;
+          page <= maxPages;
+          page++
+        ) {
+          const separator =
+            url.includes("?")
+              ? "&"
+              : "?";
+
+          const data =
+            await githubFetch(
+              `${url}${separator}page=${page}&per_page=100`,
+              signal
+            );
+
+          if (
+            !Array.isArray(data) ||
+            data.length === 0
+          ) {
+            break;
+          }
+
+          results.push(...data);
+
+          if (data.length < 100) {
+            break;
+          }
         }
 
-        window.addEventListener('resize', () => { resizeCanvas(); recreatePetals(); });
-        resizeCanvas();
+        return results;
+      }
 
-        class SakuraPetal {
-            constructor() { this.reset(true); }
-            reset(initial = false) {
-                this.x = Math.random() * window.innerWidth;
-                this.y = initial ? Math.random() * window.innerHeight : -20;
-                this.size = Math.random() * 8 + 6;
-                this.speedY = Math.random() * 0.8 + 0.4;
-                this.speedX = Math.random() * 0.6 + 0.2;
-                this.opacity = Math.random() * 0.35 + 0.15;
-                this.angle = Math.random() * Math.PI * 2;
-                this.spin = Math.random() * 0.02 - 0.01;
-                this.wobble = Math.random() * 0.03;
-                this.wobbleInc = 0;
-            }
-            update() {
-                this.y += this.speedY;
-                this.x += this.speedX + Math.sin(this.wobbleInc) * 0.4;
-                this.angle += this.spin;
-                this.wobbleInc += this.wobble;
-                if (this.y > window.innerHeight + 30 || this.x > window.innerWidth + 30 || this.x < -30) this.reset();
-            }
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.angle);
-                ctx.beginPath();
-                ctx.moveTo(0, -this.size / 2);
-                ctx.bezierCurveTo(-this.size * 0.6, -this.size * 0.6, -this.size * 0.7, this.size * 0.2, 0, this.size);
-                ctx.bezierCurveTo(this.size * 0.4, this.size * 0.4, this.size * 0.5, -this.size * 0.4, 0, -this.size / 2);
-                ctx.fillStyle = `rgba(135, 103, 123, ${this.opacity})`;
-                ctx.fill();
-                ctx.restore();
-            }
+      async function fetchOrgRepositories(
+        signal
+      ) {
+        return fetchAllPages(
+          `${CONFIG.githubApi}/orgs/${CONFIG.org}/repos?type=public&sort=updated`,
+          signal,
+          CONFIG.maxRepoPages
+        );
+      }
+
+      async function fetchRepoContributors(
+        repo,
+        signal
+      ) {
+        try {
+          return await fetchAllPages(
+            `${CONFIG.githubApi}/repos/${encodeURIComponent(repo.owner.login)}/${encodeURIComponent(repo.name)}/contributors`,
+            signal,
+            CONFIG.maxContributorPages
+          );
+        } catch (error) {
+          if (
+            error.name !==
+            "AbortError"
+          ) {
+            console.warn(
+              `Contributor request failed for ${repo.full_name}`,
+              error
+            );
+          }
+
+          return [];
         }
-        recreatePetals();
+      }
 
-        /* ====================================================================== */
-        /*  THROTTLED RENDER LOOP – canvas + cursor + card tilt lerp              */
-        /* ====================================================================== */
-        const cursorDot = document.getElementById('cursor-dot');
-        const cursorAura = document.getElementById('cursor-aura');
-        let mouse = { x: -100, y: -100 };
-        let auraPos = { x: -100, y: -100 };
-        const isDesktop = window.matchMedia('(pointer: fine)').matches;
+      async function fetchUserRepositories(
+        login,
+        signal
+      ) {
+        try {
+          return await fetchAllPages(
+            `${CONFIG.githubApi}/users/${encodeURIComponent(login)}/repos?type=owner&sort=updated`,
+            signal,
+            CONFIG.maxRepoPages
+          );
+        } catch (error) {
+          if (
+            error.name !==
+            "AbortError"
+          ) {
+            console.warn(
+              `Repository request failed for ${login}`,
+              error
+            );
+          }
 
-        window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
-
-        let cards = [];
-
-        function coreRenderLoop(time) {
-            if (!visible) { requestAnimationFrame(coreRenderLoop); return; }
-            if (time - (coreRenderLoop._lastTime || 0) < 16) { requestAnimationFrame(coreRenderLoop); return; }
-            coreRenderLoop._lastTime = time;
-
-            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-            petals.forEach(p => { p.update(); p.draw(); });
-
-            if (isDesktop) {
-                cursorDot.style.transform = `translate3d(${mouse.x}px, ${mouse.y}px, 0) translate(-50%, -50%)`;
-                auraPos.x += (mouse.x - auraPos.x) * 0.15;
-                auraPos.y += (mouse.y - auraPos.y) * 0.15;
-                cursorAura.style.transform = `translate3d(${auraPos.x}px, ${auraPos.y}px, 0) translate(-50%, -50%)`;
-            }
-
-            cards.forEach(wrapper => {
-                if (!wrapper._tilt) return;
-                const t = wrapper._tilt.target;
-                const c = wrapper._tilt.current;
-                c.rx += (t.rx - c.rx) * 0.2;
-                c.ry += (t.ry - c.ry) * 0.2;
-                wrapper.style.transform = `perspective(2000px) rotateX(${c.rx}deg) rotateY(${c.ry}deg) scale(${wrapper._scale || 1})`;
-            });
-
-            requestAnimationFrame(coreRenderLoop);
+          return [];
         }
-        coreRenderLoop._lastTime = 0;
-        requestAnimationFrame(coreRenderLoop);
+      }
 
-        /* ====================================================================== */
-        /*  CARD TILT + SPOTLIGHT – event‑driven, smooth lerp, no GSAP tweens    */
-        /* ====================================================================== */
-        function attachCardListeners() {
-            cards = document.querySelectorAll('.tilt-card-wrapper');
-            cards.forEach(wrapper => {
-                if (wrapper._tilt) return;
-                const card = wrapper.querySelector('.premium-card');
-                if (!card) return;
-                wrapper._tilt = { target: { rx: 0, ry: 0 }, current: { rx: 0, ry: 0 } };
-                wrapper._scale = 1;
+      async function fetchUser(
+        login,
+        signal
+      ) {
+        try {
+          return await githubFetch(
+            `${CONFIG.githubApi}/users/${encodeURIComponent(login)}`,
+            signal
+          );
+        } catch (error) {
+          if (
+            error.name !==
+            "AbortError"
+          ) {
+            console.warn(
+              `User request failed for ${login}`,
+              error
+            );
+          }
 
-                wrapper.addEventListener('mousemove', (e) => {
-                    const rect = wrapper.getBoundingClientRect();
-                    const mx = e.clientX - rect.left;
-                    const my = e.clientY - rect.top;
-                    card.style.setProperty('--mx', `${mx}px`);
-                    card.style.setProperty('--my', `${my}px`);
-                    const xNorm = (e.clientX - rect.left) / rect.width - 0.5;
-                    const yNorm = (e.clientY - rect.top) / rect.height - 0.5;
-                    wrapper._tilt.target.rx = -yNorm * 12;
-                    wrapper._tilt.target.ry = xNorm * 12;
-                });
-                wrapper.addEventListener('mouseleave', () => { wrapper._tilt.target.rx = 0; wrapper._tilt.target.ry = 0; });
-                card.addEventListener('mouseenter', () => { wrapper._scale = 1.02; });
-                card.addEventListener('mouseleave', () => { wrapper._scale = 1; });
-            });
+          return {};
         }
+      }
 
-        /* ====================================================================== */
-        /*  GITHUB API – Repos with AbortController, XSS‑safe                     */
-        /* ====================================================================== */
-        let repoAbortController = null;
+      /* ================================================================
+         BUILD NETWORK
+         ================================================================ */
 
-        async function fetchRepos() {
-            if (repoAbortController) repoAbortController.abort();
-            repoAbortController = new AbortController();
-            const { signal } = repoAbortController;
+      async function buildNetwork(
+        repos,
+        signal
+      ) {
+        const contributorMap =
+          new Map();
 
-            const cardMatrix = document.getElementById('card-matrix');
-            try {
-                const res = await fetch('https://api.github.com/orgs/The-Ace-Base/repos?sort=updated&per_page=6', { signal });
-                console.log('API status:', res.status);
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                const data = await res.json();
-                console.log('Repo data:', data);
-                if (!data.length) { renderFallbackCards(); return; }
+        const contributorResults =
+          await Promise.all(
+            repos.map(repo =>
+              fetchRepoContributors(
+                repo,
+                signal
+              )
+            )
+          );
 
-                cardMatrix.innerHTML = '';
-                data.forEach(repo => {
-                    const lang = repo.language || 'Code';
-                    const stars = repo.stargazers_count || 0;
-                    const forks = repo.forks_count || 0;
-
-                    const wrapper = document.createElement('a');
-                    wrapper.className = 'tilt-card-wrapper';
-                    wrapper.href = repo.html_url;
-                    wrapper.target = '_blank';
-                    wrapper.rel = 'noopener';
-                    wrapper.innerHTML = `
-                        <div class="premium-card">
-                            <div class="card-spotlight"></div>
-                            <div class="card-inner">
-                                <div class="card-icon-box"><iconify-icon icon="lucide:folder-git-2"></iconify-icon></div>
-                                <h3></h3>
-                                <p></p>
-                                <div class="card-stats">
-                                    <span><span class="card-stat-dot"></span> ${lang}</span>
-                                    <span><iconify-icon icon="lucide:star"></iconify-icon> ${stars}</span>
-                                    <span><iconify-icon icon="lucide:git-fork"></iconify-icon> ${forks}</span>
-                                </div>
-                            </div>
-                        </div>`;
-                    // XSS‑safe text injection
-                    wrapper.querySelector('h3').textContent = repo.name;
-                    wrapper.querySelector('p').textContent = repo.description || 'No description provided.';
-                    cardMatrix.appendChild(wrapper);
-                });
-            } catch (err) {
-                console.error('Fetch error:', err);
-                if (signal.aborted) return;
-                renderFallbackCards();
-            } finally {
-                if (!signal.aborted) {
-                    attachCardListeners();
-                    // Override initial opacity so new cards are visible immediately
-                    document.querySelectorAll('#card-matrix .premium-card').forEach(card => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'none';
-                    });
-                    requestAnimationFrame(() => ScrollTrigger.refresh(true));
+        contributorResults.forEach(
+          contributors => {
+            contributors.forEach(
+              contributor => {
+                if (
+                  !contributor?.login
+                ) {
+                  return;
                 }
-            }
-        }
 
-        function renderFallbackCards() {
-            const cardMatrix = document.getElementById('card-matrix');
-            cardMatrix.innerHTML = `
-                <a href="https://github.com/The-Ace-Base" target="_blank" class="tilt-card-wrapper">
-                    <div class="premium-card" style="opacity:1; transform:none;">
-                        <div class="card-spotlight"></div>
-                        <div class="card-inner">
-                            <div class="card-icon-box"><iconify-icon icon="lucide:terminal"></iconify-icon></div>
-                            <h3>Core Portfolio</h3>
-                            <p>Browse every public project inside our GitHub organization.</p>
-                        </div>
-                    </div>
-                </a>`;
-            attachCardListeners();
-            requestAnimationFrame(() => ScrollTrigger.refresh(true));
-        }
+                const login =
+                  contributor.login;
 
-        window.addEventListener('beforeunload', () => {
-            if (repoAbortController) repoAbortController.abort();
-            if (memberAbortController) memberAbortController.abort();
-        });
-
-        /* ====================================================================== */
-        /*  GITHUB API – Public Members with detailed profiles                    */
-        /* ====================================================================== */
-        let memberAbortController = null;
-        const founderLogin = 'aceyash-dev';
-
-        async function fetchOrgMembers() {
-            if (memberAbortController) memberAbortController.abort();
-            memberAbortController = new AbortController();
-            const { signal } = memberAbortController;
-
-            const container = document.getElementById('org-members');
-            const loadingEl = document.getElementById('members-loading');
-            try {
-                const res = await fetch('https://api.github.com/orgs/The-Ace-Base/public_members', { signal });
-                if (!res.ok) throw new Error();
-                const members = await res.json();
-                loadingEl.remove();
-
-                if (members.length === 0) {
-                    container.innerHTML += '<p style="grid-column:1/-1;text-align:center;">No other public members found.</p>';
-                    return;
+                if (
+                  !contributorMap.has(
+                    login
+                  )
+                ) {
+                  contributorMap.set(
+                    login,
+                    {
+                      login,
+                      avatar_url:
+                        contributor.avatar_url,
+                      html_url:
+                        contributor.html_url,
+                      contributions: 0
+                    }
+                  );
                 }
 
-                const memberDetails = await Promise.allSettled(
-                    members.filter(m => m.login !== founderLogin)
-                        .map(m => fetch(`https://api.github.com/users/${m.login}`, { signal }).then(r => r.ok ? r.json() : null))
+                const entry =
+                  contributorMap.get(
+                    login
+                  );
+
+                entry.contributions +=
+                  Number(
+                    contributor.contributions ||
+                    0
+                  );
+              }
+            );
+          }
+        );
+
+        const contributors =
+          [...contributorMap.values()]
+            .sort(
+              (a, b) =>
+                b.contributions -
+                a.contributions
+            );
+
+        const detailed = [];
+
+        for (
+          let i = 0;
+          i < contributors.length;
+          i += CONFIG.concurrency
+        ) {
+          const batch =
+            contributors.slice(
+              i,
+              i + CONFIG.concurrency
+            );
+
+          const batchResults =
+            await Promise.all(
+              batch.map(
+                async contributor => {
+                  const [
+                    user,
+                    repositories
+                  ] =
+                    await Promise.all([
+                      fetchUser(
+                        contributor.login,
+                        signal
+                      ),
+
+                      fetchUserRepositories(
+                        contributor.login,
+                        signal
+                      )
+                    ]);
+
+                  return {
+                    ...contributor,
+                    ...user,
+
+                    repositories:
+                      repositories.filter(
+                        repo =>
+                          !repo.archived &&
+                          repo.owner?.login
+                            ?.toLowerCase() ===
+                            contributor.login
+                              .toLowerCase()
+                      )
+                  };
+                }
+              )
+            );
+
+          detailed.push(
+            ...batchResults
+          );
+        }
+
+        return detailed;
+      }
+
+      /* ================================================================
+         DAILY CACHE
+         ================================================================ */
+
+      function readCache() {
+        try {
+          const raw =
+            localStorage.getItem(
+              CONFIG.cacheKey
+            );
+
+          if (!raw) return null;
+
+          const cache =
+            JSON.parse(raw);
+
+          if (
+            !cache ||
+            !cache.timestamp ||
+            !Array.isArray(
+              cache.data
+            )
+          ) {
+            return null;
+          }
+
+          const age =
+            Date.now() -
+            cache.timestamp;
+
+          if (
+            age >= CONFIG.cacheTtl
+          ) {
+            return null;
+          }
+
+          return cache.data;
+        } catch {
+          return null;
+        }
+      }
+
+      function writeCache(data) {
+        try {
+          localStorage.setItem(
+            CONFIG.cacheKey,
+            JSON.stringify({
+              timestamp: Date.now(),
+              data
+            })
+          );
+        } catch {
+          // Storage can be unavailable.
+        }
+      }
+
+      function clearCache() {
+        try {
+          localStorage.removeItem(
+            CONFIG.cacheKey
+          );
+        } catch {
+          // Nothing to do.
+        }
+      }
+
+      async function loadGitHubData() {
+        const cached =
+          readCache();
+
+        if (cached) {
+          return cached;
+        }
+
+        if (repoAbortController) {
+          repoAbortController.abort();
+        }
+
+        repoAbortController =
+          new AbortController();
+
+        const { signal } =
+          repoAbortController;
+
+        const repos =
+          await fetchOrgRepositories(
+            signal
+          );
+
+        if (!repos.length) {
+          return [];
+        }
+
+        const network =
+          await buildNetwork(
+            repos,
+            signal
+          );
+
+        writeCache(network);
+
+        return network;
+      }
+
+      /* ================================================================
+         REICON
+         ================================================================ */
+
+      function icon(
+        name,
+        size = 16
+      ) {
+        const element =
+          document.createElement(
+            "re-icon"
+          );
+
+        element.setAttribute(
+          "icon",
+          name
+        );
+
+        element.setAttribute(
+          "size",
+          String(size)
+        );
+
+        element.setAttribute(
+          "weight",
+          "outline"
+        );
+
+        return element;
+      }
+
+      /* ================================================================
+         REPOSITORY CARD
+         ================================================================ */
+
+      function createRepositoryCard(
+        repo
+      ) {
+        const wrapper =
+          document.createElement("a");
+
+        wrapper.className =
+          "tilt-card-wrapper";
+
+        wrapper.href =
+          repo.html_url;
+
+        wrapper.target =
+          "_blank";
+
+        wrapper.rel =
+          "noopener noreferrer";
+
+        const card =
+          document.createElement(
+            "div"
+          );
+
+        card.className =
+          "premium-card";
+
+        const spotlight =
+          document.createElement(
+            "div"
+          );
+
+        spotlight.className =
+          "card-spotlight";
+
+        const inner =
+          document.createElement(
+            "div"
+          );
+
+        inner.className =
+          "card-inner";
+
+        const iconBox =
+          document.createElement(
+            "div"
+          );
+
+        iconBox.className =
+          "card-icon-box";
+
+        iconBox.appendChild(
+          icon(
+            repo.fork
+              ? "git-fork"
+              : "folder",
+            20
+          )
+        );
+
+        const title =
+          document.createElement(
+            "h3"
+          );
+
+        title.textContent =
+          repo.name;
+
+        const description =
+          document.createElement(
+            "p"
+          );
+
+        description.textContent =
+          repo.description ||
+          "No description added yet.";
+
+        const stats =
+          document.createElement(
+            "div"
+          );
+
+        stats.className =
+          "card-stats";
+
+        const language =
+          document.createElement(
+            "span"
+          );
+
+        language.className =
+          "language";
+
+        language.textContent =
+          repo.language ||
+          "Code";
+
+        const stars =
+          document.createElement(
+            "span"
+          );
+
+        stars.append(
+          icon("star", 14),
+          document.createTextNode(
+            Number(
+              repo.stargazers_count ||
+              0
+            )
+          )
+        );
+
+        const forks =
+          document.createElement(
+            "span"
+          );
+
+        forks.append(
+          icon("git-fork", 14),
+          document.createTextNode(
+            Number(
+              repo.forks_count ||
+              0
+            )
+          )
+        );
+
+        stats.append(
+          language,
+          stars,
+          forks
+        );
+
+        inner.append(
+          iconBox,
+          title,
+          description,
+          stats
+        );
+
+        card.append(
+          spotlight,
+          inner
+        );
+
+        wrapper.appendChild(card);
+
+        return wrapper;
+      }
+
+      /* ================================================================
+         ARCHIVE
+         ================================================================ */
+
+      function renderArchive(
+        contributors
+      ) {
+        const container =
+          $("#contributor-segments");
+
+        if (!container) return;
+
+        container.innerHTML = "";
+
+        if (!contributors.length) {
+          const empty =
+            document.createElement(
+              "p"
+            );
+
+          empty.textContent =
+            "No contributors found yet.";
+
+          empty.style.cssText =
+            "padding:2rem 0;color:var(--text-muted);";
+
+          container.appendChild(
+            empty
+          );
+
+          return;
+        }
+
+        const segments =
+          document.createElement(
+            "div"
+          );
+
+        segments.className =
+          "contributor-segments";
+
+        const fragment =
+          document.createDocumentFragment();
+
+        contributors.forEach(
+          contributor => {
+            const segment =
+              document.createElement(
+                "article"
+              );
+
+            segment.className =
+              "contributor-segment";
+
+            /* Header */
+
+            const header =
+              document.createElement(
+                "div"
+              );
+
+            header.className =
+              "contributor-header";
+
+            const avatar =
+              document.createElement(
+                "img"
+              );
+
+            avatar.className =
+              "contributor-avatar";
+
+            avatar.src =
+              contributor.avatar_url ||
+              `https://github.com/${encodeURIComponent(
+                contributor.login
+              )}.png`;
+
+            avatar.alt =
+              `${contributor.login} avatar`;
+
+            avatar.loading =
+              "lazy";
+
+            avatar.decoding =
+              "async";
+
+            const info =
+              document.createElement(
+                "div"
+              );
+
+            info.className =
+              "contributor-info";
+
+            const nameRow =
+              document.createElement(
+                "div"
+              );
+
+            nameRow.className =
+              "contributor-name-row";
+
+            const name =
+              document.createElement(
+                "div"
+              );
+
+            name.className =
+              "contributor-name";
+
+            const profile =
+              document.createElement(
+                "a"
+              );
+
+            profile.href =
+              contributor.html_url ||
+              `https://github.com/${encodeURIComponent(
+                contributor.login
+              )}`;
+
+            profile.target =
+              "_blank";
+
+            profile.rel =
+              "noopener noreferrer";
+
+            profile.textContent =
+              contributor.name ||
+              contributor.login;
+
+            name.appendChild(
+              profile
+            );
+
+            nameRow.appendChild(
+              name
+            );
+
+            if (
+              contributor.login
+                .toLowerCase() ===
+              CONFIG.founder
+                .toLowerCase()
+            ) {
+              const badge =
+                document.createElement(
+                  "span"
                 );
 
-                let detailIndex = 0;
-                members.forEach(member => {
-                    if (member.login === founderLogin) return;
-                    const detail = memberDetails[detailIndex]?.value || null;
-                    detailIndex++;
+              badge.className =
+                "founder-badge";
 
-                    const card = document.createElement('a');
-                    card.className = 'member-card';
-                    card.href = member.html_url;
-                    card.target = '_blank';
-                    card.rel = 'noopener';
-                    const avatarUrl = `https://github.com/${member.login}.png`;
-                    const name = detail?.name || member.login;
-                    const bio = detail?.bio || '';
-                    const followers = detail?.followers || 0;
-                    const location = detail?.location || '';
+              badge.textContent =
+                "FOUNDER";
 
-                    card.innerHTML = `
-                        <img src="${avatarUrl}" alt="${member.login}" loading="lazy"
-                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23ddd%22/%3E%3C/svg%3E'">
-                        <h3>${name}</h3>
-                        ${bio ? `<p class="member-bio">${bio}</p>` : ''}
-                        <div class="member-meta">
-                            ${location ? `<span>📍 ${location}</span>` : ''}
-                            <span>👥 ${followers}</span>
-                        </div>
-                        <span>Organization Member</span>`;
-                    container.appendChild(card);
-                });
-
-                if (members.every(m => m.login === founderLogin) && !container.querySelector('.member-card:not(:first-child)')) {
-                    const msg = document.createElement('p');
-                    msg.style.cssText = 'grid-column:1/-1;text-align:center;color:var(--text-secondary);';
-                    msg.textContent = 'No other public members yet.';
-                    container.appendChild(msg);
-                }
-            } catch {
-                if (signal.aborted) return;
-                if (loadingEl) loadingEl.textContent = 'Unable to load members.';
+              nameRow.appendChild(
+                badge
+              );
             }
-        }
 
-        /* ====================================================================== */
-        /*  NAV ACTIVE STATE (IntersectionObserver)                               */
-        /* ====================================================================== */
-        const navLinks = document.querySelectorAll('.nav-link[data-section]');
-        const sectionIds = Array.from(navLinks).map(l => l.getAttribute('data-section'));
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('data-section') === entry.target.id));
+            const count =
+              document.createElement(
+                "div"
+              );
+
+            count.className =
+              "contributor-count";
+
+            count.textContent =
+              `${contributor.contributions || 0} contributions`;
+
+            info.append(
+              nameRow,
+              count
+            );
+
+            if (contributor.bio) {
+              const bio =
+                document.createElement(
+                  "p"
+                );
+
+              bio.className =
+                "contributor-bio";
+
+              bio.textContent =
+                contributor.bio;
+
+              info.appendChild(
+                bio
+              );
+            }
+
+            header.append(
+              avatar,
+              info
+            );
+
+            /* Repositories */
+
+            const repoGrid =
+              document.createElement(
+                "div"
+              );
+
+            repoGrid.className =
+              "contributor-repositories";
+
+            const repositories =
+              contributor.repositories ||
+              [];
+
+            const visible =
+              repositories.slice(
+                0,
+                5
+              );
+
+            if (!visible.length) {
+              const empty =
+                document.createElement(
+                  "p"
+                );
+
+              empty.className =
+                "contributor-empty";
+
+              empty.textContent =
+                "No public repositories owned by this contributor.";
+
+              repoGrid.appendChild(
+                empty
+              );
+            } else {
+              visible.forEach(
+                repo => {
+                  repoGrid.appendChild(
+                    createRepositoryCard(
+                      repo
+                    )
+                  );
                 }
-            });
-        }, { rootMargin: '-40% 0px -55% 0px' });
-        sectionIds.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+              );
+            }
 
-        /* ====================================================================== */
-        /*  GSAP ANIMATIONS (created once)                                        */
-        /* ====================================================================== */
-        const masterTimeline = gsap.timeline();
-        masterTimeline.to('#main-nav', { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' })
-            .to('#hero-bdg', { opacity: 1, y: 0, duration: 0.6 }, '-=0.4')
-            .to('.title-line', { opacity: 1, y: 0, duration: 1.2, stagger: 0.15, ease: 'power4.out' }, '-=0.5')
-            .to('#hero-foot', { opacity: 1, y: 0, duration: 0.8 }, '-=0.3');
+            const viewAll =
+              document.createElement(
+                "a"
+              );
 
-        gsap.to('#arch-bg', { yPercent: 10, ease: 'none', scrollTrigger: { trigger: '#hero-sec', start: 'top top', end: 'bottom top', scrub: true } });
-        gsap.to('#glow-fr', { yPercent: -20, ease: 'none', scrollTrigger: { trigger: '#hero-sec', start: 'top top', end: 'bottom top', scrub: true } });
+            viewAll.className =
+              "view-all-repos";
 
-        let scrollRevealsInitialized = false;
-        function triggerScrollReveals() {
-            if (scrollRevealsInitialized) return;
-            scrollRevealsInitialized = true;
-            gsap.to('#edit-sec', { opacity: 1, y: 0, duration: 1, ease: 'power2.out', scrollTrigger: { trigger: '#edit-sec', start: 'top 80%' } });
-            gsap.to('#title-row', { opacity: 1, y: 0, duration: 1, ease: 'power2.out', scrollTrigger: { trigger: '#title-row', start: 'top 85%' } });
-            // This will still animate initial skeleton cards, but newly added cards have opacity:1 manually
-            gsap.to('.premium-card', { opacity: 1, y: 0, duration: 1.1, stagger: 0.15, ease: 'power3.out', scrollTrigger: { trigger: '#card-matrix', start: 'top 80%' } });
-            gsap.to('#main-foot', { opacity: 1, y: 0, duration: 0.8, scrollTrigger: { trigger: '#main-foot', start: 'top 95%' } });
+            viewAll.href =
+              `https://github.com/${encodeURIComponent(
+                contributor.login
+              )}?tab=repositories`;
+
+            viewAll.target =
+              "_blank";
+
+            viewAll.rel =
+              "noopener noreferrer";
+
+            viewAll.append(
+              document.createTextNode(
+                "View all"
+              ),
+              icon(
+                "arrow-up-right",
+                14
+              )
+            );
+
+            const repoArea =
+              document.createElement(
+                "div"
+              );
+
+            repoArea.append(
+              repoGrid,
+              viewAll
+            );
+
+            segment.append(
+              header,
+              repoArea
+            );
+
+            fragment.appendChild(
+              segment
+            );
+          }
+        );
+
+        segments.appendChild(
+          fragment
+        );
+
+        container.appendChild(
+          segments
+        );
+
+        attachCardListeners();
+
+        requestAnimationFrame(() =>
+          ScrollTrigger.refresh()
+        );
+      }
+
+      /* ================================================================
+         PEOPLE
+         ================================================================ */
+
+      function renderPeople(
+        contributors
+      ) {
+        const container =
+          $("#org-members");
+
+        if (!container) return;
+
+        container.innerHTML = "";
+
+        if (!contributors.length) {
+          const empty =
+            document.createElement(
+              "p"
+            );
+
+          empty.textContent =
+            "No contributors found.";
+
+          empty.style.cssText =
+            "grid-column:1/-1;text-align:center;color:var(--text-muted);";
+
+          container.appendChild(
+            empty
+          );
+
+          return;
         }
 
-        /* ====================================================================== */
-        /*  NAV SHRINK + MOBILE MENU LOCK                                         */
-        /* ====================================================================== */
-        const nav = document.getElementById('main-nav');
-        const updateNav = () => nav.classList.toggle('scrolled', (useLenis ? lenis.scroll : window.scrollY) > 40);
-        if (useLenis) lenis.on('scroll', ({ scroll }) => { nav.classList.toggle('scrolled', scroll > 40); });
-        else window.addEventListener('scroll', updateNav, { passive: true });
+        const fragment =
+          document.createDocumentFragment();
 
-        const toggleBtn = document.getElementById('nav-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-        let menuActive = false;
+        contributors.forEach(
+          contributor => {
+            const card =
+              document.createElement(
+                "a"
+              );
 
-        toggleBtn.addEventListener('click', () => {
-            menuActive = !menuActive;
-            toggleBtn.setAttribute('aria-expanded', menuActive);
-            mobileMenu.classList.toggle('is-active', menuActive);
-            document.body.style.overflow = menuActive ? 'hidden' : '';
-            if (useLenis) { if (menuActive) lenis.stop(); else lenis.start(); }
+            card.className =
+              "member-card";
 
-            const lines = toggleBtn.querySelectorAll('.hamburger-line');
-            anime({ targets: lines[0], translateY: menuActive ? 4 : 0, rotate: menuActive ? 45 : 0, duration: 250, easing: 'easeOutQuad' });
-            anime({ targets: lines[1], translateY: menuActive ? -4 : 0, rotate: menuActive ? -45 : 0, duration: 250, easing: 'easeOutQuad' });
+            card.href =
+              contributor.html_url ||
+              `https://github.com/${encodeURIComponent(
+                contributor.login
+              )}`;
+
+            card.target =
+              "_blank";
+
+            card.rel =
+              "noopener noreferrer";
+
+            const avatar =
+              document.createElement(
+                "img"
+              );
+
+            avatar.src =
+              contributor.avatar_url ||
+              `https://github.com/${encodeURIComponent(
+                contributor.login
+              )}.png`;
+
+            avatar.alt =
+              `${contributor.login} avatar`;
+
+            avatar.loading =
+              "lazy";
+
+            avatar.decoding =
+              "async";
+
+            const name =
+              document.createElement(
+                "h3"
+              );
+
+            name.textContent =
+              contributor.name ||
+              contributor.login;
+
+            card.append(
+              avatar,
+              name
+            );
+
+            if (
+              contributor.login
+                .toLowerCase() ===
+              CONFIG.founder
+                .toLowerCase()
+            ) {
+              const badge =
+                document.createElement(
+                  "span"
+                );
+
+              badge.className =
+                "founder-badge";
+
+              badge.textContent =
+                "FOUNDER";
+
+              card.appendChild(
+                badge
+              );
+            }
+
+            if (contributor.bio) {
+              const bio =
+                document.createElement(
+                  "p"
+                );
+
+              bio.className =
+                "member-bio";
+
+              bio.textContent =
+                contributor.bio;
+
+              card.appendChild(
+                bio
+              );
+            }
+
+            const meta =
+              document.createElement(
+                "div"
+              );
+
+            meta.className =
+              "member-meta";
+
+            const contributions =
+              document.createElement(
+                "span"
+              );
+
+            contributions.append(
+              icon(
+                "code",
+                13
+              ),
+              document.createTextNode(
+                `${contributor.contributions || 0}`
+              )
+            );
+
+            meta.appendChild(
+              contributions
+            );
+
+            if (
+              contributor.followers != null
+            ) {
+              const followers =
+                document.createElement(
+                  "span"
+                );
+
+              followers.append(
+                icon(
+                  "users",
+                  13
+                ),
+                document.createTextNode(
+                  String(
+                    contributor.followers
+                  )
+                )
+              );
+
+              meta.appendChild(
+                followers
+              );
+            }
+
+            if (
+              contributor.location
+            ) {
+              const location =
+                document.createElement(
+                  "span"
+                );
+
+              location.append(
+                icon(
+                  "location",
+                  13
+                ),
+                document.createTextNode(
+                  contributor.location
+                )
+              );
+
+              meta.appendChild(
+                location
+              );
+            }
+
+            card.appendChild(
+              meta
+            );
+
+            fragment.appendChild(
+              card
+            );
+          }
+        );
+
+        container.appendChild(
+          fragment
+        );
+
+        requestAnimationFrame(() =>
+          ScrollTrigger.refresh()
+        );
+      }
+
+      /* ================================================================
+         FALLBACK
+         ================================================================ */
+
+      function renderFallback() {
+        const archive =
+          $("#contributor-segments");
+
+        if (archive) {
+          archive.innerHTML = `
+            <div style="padding:2rem 0;">
+              <a
+                href="https://github.com/${CONFIG.org}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="tilt-card-wrapper"
+                style="display:block;max-width:420px;"
+              >
+                <div class="premium-card">
+                  <div class="card-inner">
+                    <div class="card-icon-box">
+                      <re-icon
+                        icon="github"
+                        size="20"
+                        weight="outline"
+                      ></re-icon>
+                    </div>
+
+                    <h3>
+                      The Ace Base on GitHub
+                    </h3>
+
+                    <p>
+                      Projects, experiments, and code from the organization.
+                    </p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          `;
+
+          attachCardListeners();
+        }
+
+        const people =
+          $("#org-members");
+
+        if (people) {
+          people.innerHTML = `
+            <p
+              style="
+                grid-column:1/-1;
+                text-align:center;
+                color:var(--text-muted);
+              "
+            >
+              GitHub data could not be loaded right now.
+              <br>
+              <a
+                href="https://github.com/${CONFIG.org}"
+                target="_blank"
+                rel="noopener noreferrer"
+                style="color:#fff;"
+              >
+                Open the organization
+              </a>
+            </p>
+          `;
+        }
+
+        requestAnimationFrame(() =>
+          ScrollTrigger.refresh()
+        );
+      }
+
+      /* ================================================================
+         NAV
+         ================================================================ */
+
+      const nav =
+        $("#main-nav");
+
+      function updateNav(scroll) {
+        nav?.classList.toggle(
+          "scrolled",
+          scroll > 40
+        );
+      }
+
+      if (useLenis && lenis) {
+        lenis.on(
+          "scroll",
+          ({ scroll }) =>
+            updateNav(scroll)
+        );
+      } else {
+        window.addEventListener(
+          "scroll",
+          () =>
+            updateNav(
+              window.scrollY
+            ),
+          { passive: true }
+        );
+      }
+
+      /* ================================================================
+         MOBILE MENU
+         ================================================================ */
+
+      const toggleBtn =
+        $("#nav-toggle");
+
+      const mobileMenu =
+        $("#mobile-menu");
+
+      let menuActive = false;
+
+      function closeMenu() {
+        if (!menuActive) return;
+
+        menuActive = false;
+
+        toggleBtn?.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+
+        mobileMenu?.classList.remove(
+          "is-active"
+        );
+
+        mobileMenu?.setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+        document.body.style.overflow =
+          "";
+
+        if (useLenis && lenis) {
+          lenis.start();
+        }
+
+        const lines =
+          $$(".hamburger-line");
+
+        if (lines.length >= 2) {
+          anime({
+            targets: lines[0],
+            translateY: 0,
+            rotate: 0,
+            duration: 250,
+            easing: "easeOutQuad"
+          });
+
+          anime({
+            targets: lines[1],
+            translateY: 0,
+            rotate: 0,
+            duration: 250,
+            easing: "easeOutQuad"
+          });
+        }
+      }
+
+      function toggleMenu() {
+        menuActive =
+          !menuActive;
+
+        toggleBtn?.setAttribute(
+          "aria-expanded",
+          String(menuActive)
+        );
+
+        mobileMenu?.classList.toggle(
+          "is-active",
+          menuActive
+        );
+
+        mobileMenu?.setAttribute(
+          "aria-hidden",
+          String(!menuActive)
+        );
+
+        document.body.style.overflow =
+          menuActive
+            ? "hidden"
+            : "";
+
+        if (useLenis && lenis) {
+          menuActive
+            ? lenis.stop()
+            : lenis.start();
+        }
+
+        const lines =
+          $$(".hamburger-line");
+
+        if (lines.length >= 2) {
+          anime({
+            targets: lines[0],
+            translateY:
+              menuActive ? 4 : 0,
+            rotate:
+              menuActive ? 45 : 0,
+            duration: 250,
+            easing: "easeOutQuad"
+          });
+
+          anime({
+            targets: lines[1],
+            translateY:
+              menuActive ? -4 : 0,
+            rotate:
+              menuActive ? -45 : 0,
+            duration: 250,
+            easing: "easeOutQuad"
+          });
+        }
+      }
+
+      toggleBtn?.addEventListener(
+        "click",
+        toggleMenu
+      );
+
+      $$(".mobile-menu-link")
+        .forEach(link => {
+          link.addEventListener(
+            "click",
+            closeMenu
+          );
         });
 
-        document.querySelectorAll('.mobile-menu-link').forEach(link => link.addEventListener('click', () => toggleBtn.click()));
+      /* ================================================================
+         MAGNETIC BUTTON
+         ================================================================ */
 
-        /* ====================================================================== */
-        /*  MAGNETIC EFFECT (desktop)                                             */
-        /* ====================================================================== */
-        if (isDesktop) {
-            document.querySelectorAll('.magnetic-target').forEach(btn => {
-                btn.addEventListener('mousemove', (e) => {
-                    const rect = btn.getBoundingClientRect();
-                    const x = e.clientX - rect.left - rect.width / 2;
-                    const y = e.clientY - rect.top - rect.height / 2;
-                    gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3 });
+      if (isDesktop) {
+        $$(".magnetic-target")
+          .forEach(button => {
+            button.addEventListener(
+              "mousemove",
+              event => {
+                const rect =
+                  button.getBoundingClientRect();
+
+                const x =
+                  event.clientX -
+                  rect.left -
+                  rect.width / 2;
+
+                const y =
+                  event.clientY -
+                  rect.top -
+                  rect.height / 2;
+
+                gsap.to(button, {
+                  x: x * 0.25,
+                  y: y * 0.25,
+                  duration: 0.25,
+                  overwrite: true
                 });
-                btn.addEventListener('mouseleave', () => gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.5)' }));
-            });
+              }
+            );
+
+            button.addEventListener(
+              "mouseleave",
+              () => {
+                gsap.to(button, {
+                  x: 0,
+                  y: 0,
+                  duration: 0.45,
+                  ease: "elastic.out(1,0.5)"
+                });
+              }
+            );
+          });
+      }
+
+      /* ================================================================
+         TOUCH RIPPLE
+         ================================================================ */
+
+      window.addEventListener(
+        "touchstart",
+        event => {
+          const touch =
+            event.touches[0];
+
+          if (!touch) return;
+
+          createRipple(
+            touch.clientX,
+            touch.clientY
+          );
+        },
+        { passive: true }
+      );
+
+      function createRipple(x, y) {
+        const viewport =
+          $(".bg-viewport");
+
+        if (!viewport) return;
+
+        const container =
+          document.createElement(
+            "div"
+          );
+
+        container.style.cssText =
+          "position:absolute;inset:0;pointer-events:none;";
+
+        const core =
+          document.createElement(
+            "div"
+          );
+
+        const inner =
+          document.createElement(
+            "div"
+          );
+
+        const outer =
+          document.createElement(
+            "div"
+          );
+
+        [core, inner, outer].forEach(
+          element => {
+            element.style.cssText = `
+              position:absolute;
+              left:${x}px;
+              top:${y}px;
+              border-radius:50%;
+              transform:translate(-50%,-50%) scale(0);
+              pointer-events:none;
+            `;
+          }
+        );
+
+        core.style.width = "130px";
+        core.style.height = "130px";
+        core.style.background =
+          "radial-gradient(circle,rgba(255,255,255,.08),transparent 70%)";
+
+        inner.style.width = "60px";
+        inner.style.height = "60px";
+        inner.style.border =
+          "3px solid #fff";
+        inner.style.boxShadow =
+          "0 0 20px rgba(255,255,255,.2)";
+
+        outer.style.width = "80px";
+        outer.style.height = "80px";
+        outer.style.border =
+          "1px solid rgba(255,255,255,.2)";
+
+        container.append(
+          core,
+          inner,
+          outer
+        );
+
+        viewport.appendChild(
+          container
+        );
+
+        anime
+          .timeline({
+            complete: () =>
+              container.remove()
+          })
+          .add({
+            targets: core,
+            scale: [0, 1.8],
+            opacity: [0.7, 0],
+            duration: 450,
+            easing: "easeOutQuart"
+          }, 0)
+          .add({
+            targets: inner,
+            scale: [0, 2.6],
+            opacity: [1, 0],
+            duration: 600,
+            easing: "easeOutElastic(1,.85)"
+          }, 20)
+          .add({
+            targets: outer,
+            scale: [0, 3.4],
+            opacity: [0.4, 0],
+            duration: 750,
+            easing: "easeOutExpo"
+          }, 40);
+      }
+
+      /* ================================================================
+         INTERSECTION / ACTIVE NAV
+         ================================================================ */
+
+      const navLinks =
+        $$(".nav-link[data-section]");
+
+      const observedSections =
+        navLinks
+          .map(link =>
+            $(
+              `#${link.dataset.section}`
+            )
+          )
+          .filter(Boolean);
+
+      const sectionObserver =
+        new IntersectionObserver(
+          entries => {
+            entries.forEach(
+              entry => {
+                if (
+                  !entry.isIntersecting
+                ) {
+                  return;
+                }
+
+                navLinks.forEach(
+                  link => {
+                    link.classList.toggle(
+                      "active",
+                      link.dataset.section ===
+                        entry.target.id
+                    );
+                  }
+                );
+              }
+            );
+          },
+          {
+            rootMargin:
+              "-40% 0px -55% 0px"
+          }
+        );
+
+      observedSections.forEach(
+        section =>
+          sectionObserver.observe(
+            section
+          )
+      );
+
+      /* ================================================================
+         GSAP ANIMATIONS
+         ================================================================ */
+
+      const masterTimeline =
+        gsap.timeline();
+
+      masterTimeline
+        .to("#main-nav", {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out"
+        })
+
+        .to(
+          "#hero-bdg",
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6
+          },
+          "-=0.4"
+        )
+
+        .to(
+          ".title-line",
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1.1,
+            stagger: 0.15,
+            ease: "power4.out"
+          },
+          "-=0.5"
+        )
+
+        .to(
+          "#hero-foot",
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8
+          },
+          "-=0.3"
+        );
+
+      gsap.to("#arch-bg", {
+        yPercent: 10,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#hero-sec",
+          start: "top top",
+          end: "bottom top",
+          scrub: true
         }
+      });
 
-        /* ====================================================================== */
-        /*  RIPPLE EFFECT                                                         */
-        /* ====================================================================== */
-        window.addEventListener('touchstart', (e) => {
-            if (e.touches.length > 0) createRipple(e.touches[0].clientX, e.touches[0].clientY);
-        }, { passive: true });
-
-        function createRipple(x, y) {
-            const container = document.createElement('div');
-            container.style.cssText = 'position:absolute;pointer-events:none;';
-            document.getElementById('bg-viewport').appendChild(container);
-
-            const core = document.createElement('div'); core.className = 'hyper-splash-ring ring-core'; core.style.cssText = `left:${x}px;top:${y}px;width:130px;height:130px;`;
-            const inner = document.createElement('div'); inner.className = 'hyper-splash-ring ring-inner'; inner.style.cssText = `left:${x}px;top:${y}px;width:60px;height:60px;`;
-            const outer = document.createElement('div'); outer.className = 'hyper-splash-ring ring-outer'; outer.style.cssText = `left:${x}px;top:${y}px;width:80px;height:80px;`;
-            container.append(core, inner, outer);
-
-            const tl = anime.timeline({ complete: () => container.remove() });
-            tl.add({ targets: core, scale: [0, 1.8], opacity: [0.7, 0], duration: 450, easing: 'easeOutQuart' }, 0)
-              .add({ targets: inner, scale: [0, 2.6], opacity: [1, 0], duration: 600, easing: 'easeOutElastic(1,0.85)' }, 20)
-              .add({ targets: outer, scale: [0, 3.4], opacity: [0.4, 0], duration: 750, easing: 'easeOutExpo' }, 40);
+      gsap.to("#glow-top", {
+        yPercent: -20,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#hero-sec",
+          start: "top top",
+          end: "bottom top",
+          scrub: true
         }
+      });
 
-        /* ====================================================================== */
-        /*  INIT                                                                  */
-        /* ====================================================================== */
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchRepos();
-            fetchOrgMembers();
-            triggerScrollReveals();
-        });
-    </script>
+      gsap.to("#edit-sec", {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: "#edit-sec",
+          start: "top 80%"
+        }
+      });
+
+      gsap.to("#title-row", {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: "#title-row",
+          start: "top 85%"
+        }
+      });
+
+      gsap.to("#main-foot", {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: "#main-foot",
+          start: "top 95%"
+        }
+      });
+
+      /* ================================================================
+         INITIAL DATA LOAD
+         ================================================================ */
+
+      async function init() {
+        try {
+          const contributors =
+            await loadGitHubData();
+
+          renderArchive(
+            contributors
+          );
+
+          renderPeople(
+            contributors
+          );
+        } catch (error) {
+          if (
+            error.name !==
+            "AbortError"
+          ) {
+            console.error(
+              "GitHub data error:",
+              error
+            );
+
+            // Do not leave a broken skeleton
+            // sitting on the page forever.
+            clearCache();
+            renderFallback();
+          }
+        } finally {
+          requestAnimationFrame(() =>
+            ScrollTrigger.refresh()
+          );
+        }
+      }
+
+      init();
+
+      /* ================================================================
+         CLEANUP
+         ================================================================ */
+
+      window.addEventListener(
+        "beforeunload",
+        () => {
+          repoAbortController?.abort();
+        }
+      );
+    })();
+  </script>
 </body>
 </html>
