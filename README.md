@@ -1,22 +1,34 @@
 👋 Hey, I'm Ace Yash
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=800&size=28&pause=1000&color=7C3AED&center=true&vCenter=true&width=900&lines=Hey+I'm+Ace+Yash;Teen+Developer+from+India;Building+Quero;Web+Developer;Open+Source+Explorer" alt="Typing introduction" />
+  <img
+    src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=800&size=28&pause=1000&color=7C3AED&center=true&vCenter=true&width=900&lines=Hey+I'm+Ace+Yash;Teen+Developer+from+India;Building+Quero;Web+Developer;Open+Source+Explorer"
+    alt="Typing introduction"
+  />
 </p><p align="center">
   <img
-    src="https://github.com/Anmol-Baranwal/Cool-GIFs-For-GitHub/assets/74038190/9be3d344-6782-461a-b5a6-32a07bf7b34e"
-    width="600"
-    alt="Animated hello illustration"
+    src="https://user-images.githubusercontent.com/74038190/213760705-0d5bf320-4f43-4352-b74b-0889ae726bf7.gif"
+    width="500"
+    alt="Developer waving hello"
   />
 </p><p align="center">
   <a href="https://github.com/aceyash-dev">
-    <img src="https://img.shields.io/github/followers/aceyash-dev?label=Followers&style=for-the-badge&color=7C3AED" alt="GitHub followers" />
+    <img
+      src="https://img.shields.io/github/followers/aceyash-dev?label=Followers&style=for-the-badge&color=7C3AED"
+      alt="GitHub followers"
+    />
   </a>
   <a href="https://github.com/aceyash-dev?tab=repositories">
-    <img src="https://img.shields.io/github/stars/aceyash-dev?affiliations=OWNER&style=for-the-badge&color=7C3AED&label=Stars" alt="GitHub stars" />
+    <img
+      src="https://img.shields.io/github/stars/aceyash-dev?affiliations=OWNER&style=for-the-badge&color=7C3AED&label=Stars"
+      alt="GitHub stars"
+    />
   </a>
   <a href="https://ace.devs.surf">
-    <img src="https://img.shields.io/badge/Portfolio-ace.devs.surf-7C3AED?style=for-the-badge" alt="Portfolio" />
+    <img
+      src="https://img.shields.io/badge/Portfolio-ace.devs.surf-7C3AED?style=for-the-badge"
+      alt="Portfolio"
+    />
   </a>
 </p>---
 
@@ -31,11 +43,11 @@ Building modern web experiences, AI products, and developer tools.
 - 🤝 Open to collaborations and open-source projects
 - 🌐 Exploring AI, developer tooling, and modern web technologies
 
-<p align="right">
+<p align="center">
   <img
-    src="https://img.icons8.com/doodle/96/7C3AED/code.png"
-    width="72"
-    alt=""
+    src="https://user-images.githubusercontent.com/74038190/212284068-b4ee9a5c-331c-4d18-9481-53dd6b9debd5.gif"
+    width="180"
+    alt="Coding animation"
   />
 </p>---
 
@@ -45,11 +57,11 @@ Building modern web experiences, AI products, and developer tools.
 
 An AI chat platform focused on a polished, modern experience.
 
-<p align="right">
+<p align="center">
   <img
-    src="https://img.icons8.com/doodle/96/7C3AED/rocket.png"
-    width="72"
-    alt=""
+    src="https://user-images.githubusercontent.com/74038190/213760718-ca064723-1c29-4b82-985c-aadc7f57c090.gif"
+    width="320"
+    alt="Programming animation"
   />
 </p>📝 Ace Base
 
@@ -77,9 +89,25 @@ My personal developer ecosystem for projects, experiments, and things I'm buildi
   />
 </p><p align="center">
   <img
-    src="https://img.icons8.com/doodle/96/7C3AED/design.png"
-    width="72"
-    alt=""
+    src="https://user-images.githubusercontent.com/74038190/219923809-b86dc415-a0c2-4a38-bc88-ad6cf06395a8.gif"
+    width="420"
+    alt="Floating technology stack animation"
+  />
+</p>---
+
+💻 Developer Life
+
+<p align="center">
+  <img
+    src="https://user-images.githubusercontent.com/74038190/212749447-bfb7e725-6987-49d9-ae85-2015e3e7cc41.gif"
+    width="420"
+    alt="Coding vibe animation"
+  />
+</p><p align="center">
+  <img
+    src="https://user-images.githubusercontent.com/74038190/215283295-44de9069-d569-4963-ba8f-264443a54c6d.gif"
+    width="420"
+    alt="Working with coffee animation"
   />
 </p>---
 
@@ -117,6 +145,21 @@ My personal developer ecosystem for projects, experiments, and things I'm buildi
   />
 </p>---
 
+🐛 Debugging Is A Feature
+
+<p align="center">
+  <img
+    src="https://user-images.githubusercontent.com/74038190/212898774-0a96dc1d-c908-4ce8-9dd7-a71aab6e1c2b.gif"
+    width="300"
+    alt="Pro level debugging animation"
+  />
+  <img
+    src="https://user-images.githubusercontent.com/74038190/213760482-f7fa7b7b-7d6c-4063-bdd7-4483749948ad.gif"
+    width="300"
+    alt="It's not a bug, it's a feature animation"
+  />
+</p>---
+
 🌐 Connect
 
 <p align="center">
@@ -149,9 +192,9 @@ My personal developer ecosystem for projects, experiments, and things I'm buildi
   </a>
 </p><p align="center">
   <img
-    src="https://img.icons8.com/doodle/96/7C3AED/coffee.png"
-    width="72"
-    alt=""
+    src="https://user-images.githubusercontent.com/74038190/212284119-fbfd994d-8c2a-4a07-a75f-84e513833c1c.gif"
+    width="220"
+    alt="Coffee coding animation"
   />
 </p>---
 
