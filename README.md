@@ -10,7 +10,7 @@
 <p align="center">
   <img
     src="https://user-images.githubusercontent.com/74038190/212751818-13da6fd2-27ca-45c4-9c64-3940ccfa6fd3.gif"
-    width="360"
+    width="340"
     alt="Illustrated developer coding"
   />
 </p>
@@ -48,25 +48,24 @@
 Teen developer from India 🇮🇳
 Building modern web experiences,
 AI products, and developer tools.
+```
 
-🤖 Currently building Quero
+- 🤖 Currently building **Quero**
+- 📝 Working on **Ace Base**
+- 🎨 Interested in clean UI/UX
+- 🧩 Focused on frontend architecture
+- 🤝 Open to collaborations
+- 🌐 Exploring AI and developer tooling
 
-📝 Working on Ace Base
+</td>
 
-🎨 Interested in clean UI/UX
+<td width="35%" align="center">
 
-🧩 Focused on frontend architecture
-
-🤝 Open to collaborations
-
-🌐 Exploring AI and developer tooling
-
-
-</td><td width="35%" align="center"><img
-src="https://user-images.githubusercontent.com/74038190/212897707-026174ef-f09d-4d41-a4bb-c7266f5420b0.gif"
-width="220"
-alt="Illustrated developer working on a laptop"
-/>
+<img
+  src="https://user-images.githubusercontent.com/74038190/212747903-e9bdf048-2dc8-41f9-b973-0e72ff07bfba.gif"
+  width="220"
+  alt="Illustrated curious developer"
+ />
 
 </td>
 </tr>
@@ -74,35 +73,49 @@ alt="Illustrated developer working on a laptop"
 
 ---
 
-🚀 What I'm Building
+## 🚀 What I'm Building
 
 <table>
-<tr><td width="50%" valign="top">🤖 Quero
+<tr>
+
+<td width="50%" valign="top">
+
+### 🤖 Quero
 
 An AI chat platform focused on a polished, modern experience.
 
 <p align="center">
   <img
     src="https://user-images.githubusercontent.com/74038190/213760710-201a57d2-95f1-45c7-b910-44faf209d2f8.gif"
-    width="260"
+    width="250"
     alt="Illustrated confident developer"
   />
-</p></td><td width="50%" valign="top">📝 Ace Base
+</p>
+
+</td>
+
+<td width="50%" valign="top">
+
+### 📝 Ace Base
 
 My personal developer ecosystem for projects, experiments, and things I'm building.
 
 <p align="center">
   <img
-    src="https://user-images.githubusercontent.com/74038190/212900420-11d6daeb-4bcd-474f-ad58-86c47d25b541.gif"
-    width="260"
-    alt="Illustrated developer working on a laptop"
+    src="https://github.com/Anmol-Baranwal/Cool-GIFs-For-GitHub/assets/74038190/72903324-cf57-4e90-80a6-ed3c9734e0ed"
+    width="400"
+    alt="Web development illustration"
   />
-</p></td></tr>
+</p>
+
+</td>
+
+</tr>
 </table>
 
 ---
 
-🌍 Portfolio
+## 🌍 Portfolio
 
 <p align="center">
   <a href="https://ace.devs.surf">
@@ -115,32 +128,36 @@ My personal developer ecosystem for projects, experiments, and things I'm buildi
 
 ---
 
-🛠 Tech Stack
+## 🛠 Tech Stack
 
 <p align="center">
   <img
     src="https://skillicons.dev/icons?i=html,css,js,react,nodejs,git,github,vercel,netlify,firebase,vscode,figma&perline=6"
     alt="Technology stack"
   />
-</p><p align="center">
+</p>
+
+<p align="center">
   <img
     src="https://user-images.githubusercontent.com/74038190/219923809-b86dc415-a0c2-4a38-bc88-ad6cf06395a8.gif"
     width="420"
-    alt="Animated technology illustration"
+    alt="Animated technology stack illustration"
   />
 </p>
 
 ---
 
-💻 Developer Mode
+## 💻 Developer Mode
 
 <p align="center">
   <img
-    src="https://user-images.githubusercontent.com/74038190/212900420-11d6daeb-4bcd-474f-ad58-86c47d25b541.gif"
+    src="https://user-images.githubusercontent.com/74038190/212749447-bfb7e725-6987-49d9-ae85-2015e3e7cc41.gif"
     width="420"
-    alt="Illustrated developer working on a laptop"
+    alt="Developer coding animation"
   />
-</p><p align="center">
+</p>
+
+<p align="center">
   <b>Build.</b>
   &nbsp;•&nbsp;
   <b>Break.</b>
@@ -154,25 +171,23 @@ My personal developer ecosystem for projects, experiments, and things I'm buildi
 
 ---
 
-
-🐛 Debugging Is Part of the Job
+## 🐛 Debugging Is Part of the Job
 
 <p align="center">
   <img
     src="https://user-images.githubusercontent.com/74038190/212750999-42ff8a64-dad8-4772-9648-849968543991.gif"
     width="420"
-    alt="Illustrated developer coding in peace"
+    alt="Developer coding in peace"
   />
-</p>> Sometimes the code works.
+</p>
 
-Sometimes we discover why.
-
-
-
+> Sometimes the code works.
+>
+> Sometimes we discover why.
 
 ---
 
-⚡ JavaScript Is the Boss
+## ⚡ JavaScript Is the Boss
 
 <p align="center">
   <img
@@ -184,7 +199,7 @@ Sometimes we discover why.
 
 ---
 
-📊 GitHub Stats
+## 📊 GitHub Stats
 
 <p align="center">
   <img
@@ -201,7 +216,7 @@ Sometimes we discover why.
 
 ---
 
-🔥 Contribution Streak
+## 🔥 Contribution Streak
 
 <p align="center">
   <img
@@ -212,7 +227,7 @@ Sometimes we discover why.
 
 ---
 
-📈 Contribution Activity
+## 📈 Contribution Activity
 
 <p align="center">
   <img
@@ -224,15 +239,19 @@ Sometimes we discover why.
 
 ---
 
-🌐 Connect
+## 🌐 Connect
 
-<p align="center">  <a href="https://github.com/aceyash-dev">
+<p align="center">
+
+  <a href="https://github.com/aceyash-dev">
     <img
       src="https://skillicons.dev/icons?i=github"
       width="48"
       alt="GitHub"
     />
-  </a>  
+  </a>
+
+  &nbsp;&nbsp;
 
   <a href="https://instagram.com/archives.of.yash">
     <img
@@ -240,7 +259,9 @@ Sometimes we discover why.
       width="48"
       alt="Instagram"
     />
-  </a>  
+  </a>
+
+  &nbsp;&nbsp;
 
   <a href="https://dev.to/aceyash-dev">
     <img
@@ -248,7 +269,9 @@ Sometimes we discover why.
       width="48"
       alt="DEV Community"
     />
-  </a>  
+  </a>
+
+  &nbsp;&nbsp;
 
   <a href="mailto:aceyash-dev@proton.me">
     <img
@@ -256,19 +279,23 @@ Sometimes we discover why.
       width="48"
       alt="Email"
     />
-  </a></p>
+  </a>
+
+</p>
 
 ---
 
-☕ Support
+## ☕ Support
 
 <p align="center">
   <img
     src="https://user-images.githubusercontent.com/74038190/215283295-44de9069-d569-4963-ba8f-264443a54c6d.gif"
     width="260"
-    alt="Illustrated developer working with coffee"
+    alt="Developer working with coffee"
   />
-</p><p align="center">
+</p>
+
+<p align="center">
   <a href="https://chai4.me/aceyash-dev">
     <img
       src="https://chai4.me/icons/wordmark.png"
@@ -285,6 +312,8 @@ Sometimes we discover why.
     src="https://komarev.com/ghpvc/?username=aceyash-dev&label=Profile%20Views&color=7C3AED&style=flat"
     alt="Profile views"
   />
-</p><p align="center">
+</p>
+
+<p align="center">
   <i>Building beautiful things, one commit at a time.</i>
 </p>
