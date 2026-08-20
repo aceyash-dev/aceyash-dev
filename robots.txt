@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ace-base.indevs.in/sitemap.xml
