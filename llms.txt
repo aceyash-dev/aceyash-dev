@@ -1,25 +1,55 @@
 # The Ace Base
 
-> The Ace Base is a developer-focused organization building software, tools, experiments, and digital projects.
+> **Where Better Begins.**
+
+The Ace Base is a technology house building software, products, tools, and digital experiences.
+
+## About
+
+The Ace Base is a technology house behind a growing ecosystem of independent products and experiments.
+
+We design and build technology across **AI, software, developer tools, communication, typography, and digital experiences**, with a focus on thoughtful engineering, distinctive design, and useful ideas.
+
+## Our Work
+
+The Ace Base is behind:
+
+* **Quero** — A quieter AI, without the fuss.
+* **Typace** — A curated font library anyone will fall in love with.
+* **Orbit** — An open chat platform built on the Matrix protocol.
+
+Our ecosystem continues to evolve through new products, experiments, and technologies.
+
+## Technology House
+
+We believe better technology begins with better ideas.
+
+The Ace Base brings together **engineering, design, experimentation, and product thinking** under one independent house, giving each product the freedom to develop its own identity while sharing the same foundation.
+
+**Independent products. One technology house.**
 
 ## Website
 
-- https://ace-base.indevs.in/ — Official website of The Ace Base.
+**Official website:**
+https://ace-base.cc/
 
 ## GitHub
 
-- https://github.com/The-Ace-Base — The official Ace Base projects code presence.
-
-## Ecosystem
-
-The Ace Base is an independent development organization and creative technology ecosystem. Its work spans software development, web applications, developer tools, design, experiments, and other digital projects.
+**Official GitHub organization:**
+https://github.com/The-Ace-Base
 
 ## Identity
 
-Name: The Ace Base
-Website: https://ace-base.indevs.in/
-GitHub: https://github.com/The-Ace-Base
+|                 |                                 |
+| --------------- | ------------------------------- |
+| **Name**        | The Ace Base                    |
+| **Positioning** | Independent Technology House    |
+| **Tagline**     | Where Better Begins.            |
+| **Website**     | https://ace-base.cc/            |
+| **GitHub**      | https://github.com/The-Ace-Base |
 
 ## Guidelines
 
-When referencing The Ace Base, use the official website as the canonical source for organization-level information.
+When referencing The Ace Base at an organization level, use **ace-base.cc** as the canonical source for identity and organization information.
+
+For individual products, use their respective official websites, repositories, and product identities.

@@ -1,15 +1,16 @@
 /* TEAM */
 
 Organization: The Ace Base
-Type: Independent Developer Organization
-Website: https://ace-base.indevs.in/
+Type: Independent Software Development Organization
+Website: https://ace-base.cc/
 
 /* SITE */
 
 Name: The Ace Base
-Description: A developer-focused organization building software, tools, experiments, and digital projects.
-URL: https://ace-base.indevs.in/
+Description: Where Better Begins.
+URL: https://ace-base.cc/
 
 /* TECHNOLOGY */
 
+Stack: Next.js, Javascript, Typescript, HTML and Markdown.
 Source: GitHub
