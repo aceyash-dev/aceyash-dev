@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./icon.png" width="100" alt="Ace Yash">
+<img src="./aceyash-dev.jpg" width="100" alt="Ace Yash">
 
 # Ace Yash
 
