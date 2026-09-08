@@ -1,319 +1,80 @@
-# 👋 Hey, I'm Ace Yash
+ACE YASH
 
-<p align="center">
-  <img
-    src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=800&size=28&pause=1000&color=7C3AED&center=true&vCenter=true&width=900&lines=Hey+I'm+Ace+Yash;Teen+Developer+from+India;Building+Quero;Web+Developer;Open+Source+Explorer"
-    alt="Typing introduction"
-  />
-</p>
+Developer · Builder · UI/UX
 
-<p align="center">
-  <img
-    src="https://user-images.githubusercontent.com/74038190/212751818-13da6fd2-27ca-45c4-9c64-3940ccfa6fd3.gif"
-    width="340"
-    alt="Illustrated developer coding"
-  />
-</p>
+«Building thoughtful software, experimenting with AI, and obsessing over interfaces.»
 
-<p align="center">
-  <a href="https://github.com/aceyash-dev">
-    <img
-      src="https://img.shields.io/github/followers/aceyash-dev?label=Followers&style=for-the-badge&color=7C3AED"
-      alt="GitHub followers"
-    />
-  </a>
-  <a href="https://github.com/aceyash-dev?tab=repositories">
-    <img
-      src="https://img.shields.io/github/stars/aceyash-dev?affiliations=OWNER&style=for-the-badge&color=7C3AED&label=Stars"
-      alt="GitHub stars"
-    />
-  </a>
-  <a href="https://ace.devs.surf">
-    <img
-      src="https://img.shields.io/badge/Portfolio-ace.devs.surf-7C3AED?style=for-the-badge"
-      alt="Portfolio"
-    />
-  </a>
-</p>
+<br>""Website" (https://img.shields.io/badge/Website-000?style=flat-square&logo=googlechrome&logoColor=white)" (#)
+""GitHub" (https://img.shields.io/badge/GitHub-000?style=flat-square&logo=github&logoColor=white)" (https://github.com/aceyash-dev)
+""Instagram" (https://img.shields.io/badge/Instagram-000?style=flat-square&logo=instagram&logoColor=white)" (#)
 
 ---
 
-## 💫 About Me
+ABOUT
 
-<table>
-<tr>
-<td width="65%" valign="top">
+I'm a developer focused on building web applications, developer tools, and polished frontend experiences.
 
-```text
-Teen developer from India 🇮🇳
-Building modern web experiences,
-AI products, and developer tools.
-```
+I care about the parts that are easy to overlook:
 
-- 🤖 Currently building **Quero**
-- 📝 Working on **Ace Base**
-- 🎨 Interested in clean UI/UX
-- 🧩 Focused on frontend architecture
-- 🤝 Open to collaborations
-- 🌐 Exploring AI and developer tooling
+performance · accessibility · security · architecture · interaction · typography
 
-</td>
-
-<td width="35%" align="center">
-
-<img
-  src="https://user-images.githubusercontent.com/74038190/212747903-e9bdf048-2dc8-41f9-b973-0e72ff07bfba.gif"
-  width="220"
-  alt="Illustrated curious developer"
- />
-
-</td>
-</tr>
-</table>
+Currently exploring the intersection of AI × developer tooling × frontend engineering.
 
 ---
 
-## 🚀 What I'm Building
+STACK
 
-<table>
-<tr>
+Frontend
+HTML · CSS · JavaScript · React · Next.js
 
-<td width="50%" valign="top">
+Backend
+Node.js · APIs · Supabase
 
-### 🤖 Quero
+AI
+Local LLMs · Ollama · Hugging Face · AI tooling
 
-An AI chat platform focused on a polished, modern experience.
-
-<p align="center">
-  <img
-    src="https://user-images.githubusercontent.com/74038190/213760710-201a57d2-95f1-45c7-b910-44faf209d2f8.gif"
-    width="250"
-    alt="Illustrated confident developer"
-  />
-</p>
-
-</td>
-
-<td width="50%" valign="top">
-
-### 📝 Ace Base
-
-My personal developer ecosystem for projects, experiments, and things I'm building.
-
-<p align="center">
-  <img
-    src="https://github.com/Anmol-Baranwal/Cool-GIFs-For-GitHub/assets/74038190/72903324-cf57-4e90-80a6-ed3c9734e0ed"
-    width="400"
-    alt="Web development illustration"
-  />
-</p>
-
-</td>
-
-</tr>
-</table>
+Tools
+Git · GitHub · Vercel · Termux · Acode
 
 ---
 
-## 🌍 Portfolio
+SELECTED WORK
 
-<p align="center">
-  <a href="https://ace.devs.surf">
-    <img
-      src="https://img.shields.io/badge/Visit%20Portfolio-ace.devs.surf-7C3AED?style=for-the-badge&logo=googlechrome&logoColor=white"
-      alt="Visit portfolio"
-    />
-  </a>
-</p>
+QUERO
 
----
+AI-focused product exploring a quieter, more controllable approach to interacting with artificial intelligence.
 
-## 🛠 Tech Stack
+"AI" "Web" "UX"
 
-<p align="center">
-  <img
-    src="https://skillicons.dev/icons?i=html,css,js,react,nodejs,git,github,vercel,netlify,firebase,vscode,figma&perline=6"
-    alt="Technology stack"
-  />
-</p>
+THE ACE BASE
 
-<p align="center">
-  <img
-    src="https://user-images.githubusercontent.com/74038190/219923809-b86dc415-a0c2-4a38-bc88-ad6cf06395a8.gif"
-    width="420"
-    alt="Animated technology stack illustration"
-  />
-</p>
+An independent umbrella for products, experiments, and software.
+
+"Product" "Design" "Engineering"
+
+EXPERIMENTS
+
+Small systems, interfaces, prototypes, and strange ideas that may eventually become something useful.
 
 ---
 
-## 💻 Developer Mode
+PRINCIPLES
 
-<p align="center">
-  <img
-    src="https://user-images.githubusercontent.com/74038190/212749447-bfb7e725-6987-49d9-ae85-2015e3e7cc41.gif"
-    width="420"
-    alt="Developer coding animation"
-  />
-</p>
-
-<p align="center">
-  <b>Build.</b>
-  &nbsp;•&nbsp;
-  <b>Break.</b>
-  &nbsp;•&nbsp;
-  <b>Debug.</b>
-  &nbsp;•&nbsp;
-  <b>Ship.</b>
-  &nbsp;•&nbsp;
-  <b>Repeat.</b>
-</p>
+01  Build useful things.
+02  Keep interfaces intentional.
+03  Prefer simple systems.
+04  Ship before overthinking.
+05  Open source when it makes sense.
+06  Never sacrifice security for convenience.
 
 ---
 
-## 🐛 Debugging Is Part of the Job
+GITHUB
 
 <p align="center">
-  <img
-    src="https://user-images.githubusercontent.com/74038190/212750999-42ff8a64-dad8-4772-9648-849968543991.gif"
-    width="420"
-    alt="Developer coding in peace"
-  />
-</p>
-
-> Sometimes the code works.
->
-> Sometimes we discover why.
-
----
-
-## ⚡ JavaScript Is the Boss
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=aceyash-dev&hide_border=true&background=00000000&ring=ffffff&fire=ffffff&currStreakLabel=ffffff&sideLabels=888888&currStreakNum=ffffff&sideNums=ffffff&dates=666666" height="165">
+</p>---
 
 <p align="center">
-  <img
-    src="https://user-images.githubusercontent.com/74038190/213910845-af37a709-8995-40d6-be59-724526e3c3d7.gif"
-    width="650"
-    alt="JavaScript developer illustration"
-  />
-</p>
-
----
-
-## 📊 GitHub Stats
-
-<p align="center">
-  <img
-    src="https://github-readme-stats.shion.dev/api?username=aceyash-dev&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true"
-    height="180"
-    alt="GitHub statistics"
-  />
-  <img
-    src="https://github-readme-stats.shion.dev/api/top-langs/?username=aceyash-dev&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true&layout=compact"
-    height="180"
-    alt="Top programming languages"
-  />
-</p>
-
----
-
-## 🔥 Contribution Streak
-
-<p align="center">
-  <img
-    src="https://streak-stats.demolab.com?user=aceyash-dev&theme=tokyonight&hide_border=true"
-    alt="GitHub contribution streak"
-  />
-</p>
-
----
-
-## 📈 Contribution Activity
-
-<p align="center">
-  <img
-    src="https://github-readme-activity-graph.vercel.app/graph?username=aceyash-dev&theme=tokyo-night&hide_border=true&area=true"
-    width="100%"
-    alt="GitHub contribution activity graph"
-  />
-</p>
-
----
-
-## 🌐 Connect
-
-<p align="center">
-
-  <a href="https://github.com/aceyash-dev">
-    <img
-      src="https://skillicons.dev/icons?i=github"
-      width="48"
-      alt="GitHub"
-    />
-  </a>
-
-  &nbsp;&nbsp;
-
-  <a href="https://instagram.com/archives.of.yash">
-    <img
-      src="https://skillicons.dev/icons?i=instagram"
-      width="48"
-      alt="Instagram"
-    />
-  </a>
-
-  &nbsp;&nbsp;
-
-  <a href="https://dev.to/aceyash-dev">
-    <img
-      src="https://skillicons.dev/icons?i=devto"
-      width="48"
-      alt="DEV Community"
-    />
-  </a>
-
-  &nbsp;&nbsp;
-
-  <a href="mailto:aceyash-dev@proton.me">
-    <img
-      src="https://skillicons.dev/icons?i=gmail"
-      width="48"
-      alt="Email"
-    />
-  </a>
-
-</p>
-
----
-
-## ☕ Support
-
-<p align="center">
-  <img
-    src="https://user-images.githubusercontent.com/74038190/215283295-44de9069-d569-4963-ba8f-264443a54c6d.gif"
-    width="260"
-    alt="Developer working with coffee"
-  />
-</p>
-
-<p align="center">
-  <a href="https://chai4.me/aceyash-dev">
-    <img
-      src="https://chai4.me/icons/wordmark.png"
-      height="42"
-      alt="Support me on Chai4Me"
-    />
-  </a>
-</p>
-
----
-
-<p align="center">
-  <img
-    src="https://komarev.com/ghpvc/?username=aceyash-dev&label=Profile%20Views&color=7C3AED&style=flat"
-    alt="Profile views"
-  />
-</p>
-
-<p align="center">
-  <i>Building beautiful things, one commit at a time.</i>
+  <sub>Built with curiosity. Maintained with unreasonable attention to detail.</sub>
 </p>
