@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="./icon.png" width="100" alt="Ace Yash">
+
 # Ace Yash
 
 **Developer · CEO, The Ace Base**
@@ -10,7 +12,7 @@ Working mainly with web technologies, frontend development, UI/UX, and developer
 
 [![GitHub](https://img.shields.io/badge/GitHub-18181B?style=flat-square&logo=github&logoColor=white)](https://github.com/aceyash-dev)
 [![Website](https://img.shields.io/badge/Website-18181B?style=flat-square&logo=googlechrome&logoColor=white)](https://aceyash.dev)
-[![Instagram](https://img.shields.io/badge/Instagram-18181B?style=flat-square&logo=instagram&logoColor=white)](https://instagram.com/archives.of.yash)
+[![Instagram](https://img.shields.io/badge/Instagram-18181B?style=flat-square&logo=instagram&logoColor=white)](https: I//instagram.com/archives.of.yash)
 
 </div>
 
@@ -48,19 +50,6 @@ that doesn't make users fight the UI.
 <div align="center">
 
 [![GitHub Profile](https://img.shields.io/badge/View%20Profile-18181B?style=for-the-badge&logo=github&logoColor=white)](https://github.com/aceyash-dev)
-
-</div>
-
----
-
-## Activity
-
-<div align="center">
-
-<img
-  src="https://github-readme-activity-graph.vercel.app/graph?username=aceyash-dev&hide_border=true"
-  alt="GitHub contribution activity"
->
 
 </div>
 
