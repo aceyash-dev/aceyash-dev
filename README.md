@@ -1,80 +1,54 @@
-ACE YASH
-
-Developer · Builder · UI/UX
-
-«Building thoughtful software, experimenting with AI, and obsessing over interfaces.»
-
-<br>""Website" (https://img.shields.io/badge/Website-000?style=flat-square&logo=googlechrome&logoColor=white)" (#)
-""GitHub" (https://img.shields.io/badge/GitHub-000?style=flat-square&logo=github&logoColor=white)" (https://github.com/aceyash-dev)
-""Instagram" (https://img.shields.io/badge/Instagram-000?style=flat-square&logo=instagram&logoColor=white)" (#)
-
----
-
-ABOUT
-
-I'm a developer focused on building web applications, developer tools, and polished frontend experiences.
-
-I care about the parts that are easy to overlook:
-
-performance · accessibility · security · architecture · interaction · typography
-
-Currently exploring the intersection of AI × developer tooling × frontend engineering.
-
----
-
-STACK
-
-Frontend
-HTML · CSS · JavaScript · React · Next.js
-
-Backend
-Node.js · APIs · Supabase
-
-AI
-Local LLMs · Ollama · Hugging Face · AI tooling
-
-Tools
-Git · GitHub · Vercel · Termux · Acode
-
----
-
-SELECTED WORK
-
-QUERO
-
-AI-focused product exploring a quieter, more controllable approach to interacting with artificial intelligence.
-
-"AI" "Web" "UX"
-
-THE ACE BASE
-
-An independent umbrella for products, experiments, and software.
-
-"Product" "Design" "Engineering"
-
-EXPERIMENTS
-
-Small systems, interfaces, prototypes, and strange ideas that may eventually become something useful.
-
----
-
-PRINCIPLES
-
-01  Build useful things.
-02  Keep interfaces intentional.
-03  Prefer simple systems.
-04  Ship before overthinking.
-05  Open source when it makes sense.
-06  Never sacrifice security for convenience.
-
----
-
-GITHUB
+Ace Yash
 
 <p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=aceyash-dev&hide_border=true&background=00000000&ring=ffffff&fire=ffffff&currStreakLabel=ffffff&sideLabels=888888&currStreakNum=ffffff&sideNums=ffffff&dates=666666" height="165">
-</p>---
+  <img src="./aceyash-dev.jpg" width="96" height="96" alt="Ace Yash">
+</p><p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=20&duration=2800&pause=900&color=888888&center=true&vCenter=true&width=600&lines=Developer;CEO+%40+The+Ace+Base;Web+%2F%2F+Frontend+%2F%2F+JavaScript" alt="Typing animation">
+</p><p align="center">
+  <a href="https://github.com/aceyash-dev">
+    <img src="https://img.shields.io/badge/GitHub-111111?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+  </a>
+  <a href="https://instagram.com/archives.of.yash">
+    <img src="https://img.shields.io/badge/Instagram-111111?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram">
+  </a>
+  <a href="https://ace.devs.surf">
+    <img src="https://img.shields.io/badge/Website-111111?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Website">
+  </a>
+</p>
+
+About
+
+Ace Yash
+Developer · CEO, The Ace Base
+
+Working mainly with web technologies, frontend development, UI/UX, and developer tooling.
+
+Stack
 
 <p align="center">
-  <sub>Built with curiosity. Maintained with unreasonable attention to detail.</sub>
+  <img src="https://skillicons.dev/icons?i=html,css,js,ts,react,nextjs,vite,nodejs,supabase,vercel,git,github&perline=6" alt="Technologies">
+</p>GitHub Stats
+
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=aceyash-dev&show_icons=true&hide_border=true&include_all_commits=true&count_private=true&rank_icon=github&theme=transparent" alt="GitHub statistics">
+</p><p align="center">
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=aceyash-dev&layout=compact&hide_border=true&langs_count=8&theme=transparent" alt="Most used languages">
+</p><p align="center">
+  <img src="https://streak-stats.demolab.com/?user=aceyash-dev&hide_border=true&theme=transparent" alt="GitHub streak">
+</p>Activity
+
+<p align="center">
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=aceyash-dev&bg_color=00000000&color=777777&line=777777&point=ffffff&area=true&hide_border=true" alt="GitHub activity graph">
+</p>
+
+<p align="center">
+  <a href="https://github.com/aceyash-dev">
+    <img src="https://img.shields.io/badge/VIEW%20GITHUB-111111?style=for-the-badge&logo=github&logoColor=white" alt="View GitHub">
+  </a>
+  <a href="https://instagram.com/archives.of.yash">
+    <img src="https://img.shields.io/badge/@ARCHIVES.OF.YASH-111111?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram">
+  </a>
+  <a href="https://ace.devs.surf">
+    <img src="https://img.shields.io/badge/ACEYASH.DEV-111111?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Website">
+  </a>
 </p>
