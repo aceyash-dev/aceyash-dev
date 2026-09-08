@@ -1,54 +1,79 @@
-Ace Yash
+<div align="center">
 
-<p align="center">
-  <img src="./aceyash-dev.jpg" width="96" height="96" alt="Ace Yash">
-</p><p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=20&duration=2800&pause=900&color=888888&center=true&vCenter=true&width=600&lines=Developer;CEO+%40+The+Ace+Base;Web+%2F%2F+Frontend+%2F%2F+JavaScript" alt="Typing animation">
-</p><p align="center">
-  <a href="https://github.com/aceyash-dev">
-    <img src="https://img.shields.io/badge/GitHub-111111?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
-  </a>
-  <a href="https://instagram.com/archives.of.yash">
-    <img src="https://img.shields.io/badge/Instagram-111111?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram">
-  </a>
-  <a href="https://ace.devs.surf">
-    <img src="https://img.shields.io/badge/Website-111111?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Website">
-  </a>
-</p>
+# Ace Yash
 
-About
-
-Ace Yash
-Developer · CEO, The Ace Base
+**Developer · CEO, The Ace Base**
 
 Working mainly with web technologies, frontend development, UI/UX, and developer tooling.
 
-Stack
+<br>
 
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=html,css,js,ts,react,nextjs,vite,nodejs,supabase,vercel,git,github&perline=6" alt="Technologies">
-</p>GitHub Stats
+[![GitHub](https://img.shields.io/badge/GitHub-18181B?style=flat-square&logo=github&logoColor=white)](https://github.com/aceyash-dev)
+[![Website](https://img.shields.io/badge/Website-18181B?style=flat-square&logo=googlechrome&logoColor=white)](https://aceyash.dev)
+[![Instagram](https://img.shields.io/badge/Instagram-18181B?style=flat-square&logo=instagram&logoColor=white)](https://instagram.com/archives.of.yash)
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=aceyash-dev&show_icons=true&hide_border=true&include_all_commits=true&count_private=true&rank_icon=github&theme=transparent" alt="GitHub statistics">
-</p><p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=aceyash-dev&layout=compact&hide_border=true&langs_count=8&theme=transparent" alt="Most used languages">
-</p><p align="center">
-  <img src="https://streak-stats.demolab.com/?user=aceyash-dev&hide_border=true&theme=transparent" alt="GitHub streak">
-</p>Activity
+</div>
 
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=aceyash-dev&bg_color=00000000&color=777777&line=777777&point=ffffff&area=true&hide_border=true" alt="GitHub activity graph">
-</p>
+---
 
-<p align="center">
-  <a href="https://github.com/aceyash-dev">
-    <img src="https://img.shields.io/badge/VIEW%20GITHUB-111111?style=for-the-badge&logo=github&logoColor=white" alt="View GitHub">
-  </a>
-  <a href="https://instagram.com/archives.of.yash">
-    <img src="https://img.shields.io/badge/@ARCHIVES.OF.YASH-111111?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram">
-  </a>
-  <a href="https://ace.devs.surf">
-    <img src="https://img.shields.io/badge/ACEYASH.DEV-111111?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Website">
-  </a>
-</p>
+## About
+
+I'm a developer focused on building polished web experiences,
+frontend interfaces, and developer tools.
+
+I care about simple interfaces, good performance, and software
+that doesn't make users fight the UI.
+
+---
+
+## Stack
+
+<div align="center">
+
+<img src="https://skillicons.dev/icons?i=html" width="48" alt="HTML">
+<img src="https://skillicons.dev/icons?i=css" width="48" alt="CSS">
+<img src="https://skillicons.dev/icons?i=js" width="48" alt="JavaScript">
+<img src="https://skillicons.dev/icons?i=vite" width="48" alt="Vite">
+<img src="https://skillicons.dev/icons?i=supabase" width="48" alt="Supabase">
+<img src="https://skillicons.dev/icons?i=vercel" width="48" alt="Vercel">
+<img src="https://skillicons.dev/icons?i=git" width="48" alt="Git">
+<img src="https://skillicons.dev/icons?i=github" width="48" alt="GitHub">
+
+</div>
+
+---
+
+## GitHub
+
+<div align="center">
+
+[![GitHub Profile](https://img.shields.io/badge/View%20Profile-18181B?style=for-the-badge&logo=github&logoColor=white)](https://github.com/aceyash-dev)
+
+</div>
+
+---
+
+## Activity
+
+<div align="center">
+
+<img
+  src="https://github-readme-activity-graph.vercel.app/graph?username=aceyash-dev&hide_border=true"
+  alt="GitHub contribution activity"
+>
+
+</div>
+
+---
+
+<div align="center">
+
+[![Instagram](https://img.shields.io/badge/@archives.of.yash-18181B?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/archives.of.yash)
+
+[![Website](https://img.shields.io/badge/aceyash.dev-18181B?style=for-the-badge&logo=googlechrome&logoColor=white)](https://aceyash.dev)
+
+<br>
+
+*Build · Learn · Share · Repeat.*
+
+</div>
