@@ -3,8 +3,7 @@
     <tr>
       <td width="64%" valign="middle">
         <h1>ACE YASH</h1>
-        <p><strong>Design with intent. Build with precision.</strong></p>
-        <p>Frontend developer crafting responsive, thoughtful web experiences.</p>
+        <p><strong>Turning Coffee into Code ⚡</strong></p>
         <p>
           <a href="https://ace.devs.surf"><img src="https://img.shields.io/badge/PORTFOLIO-ace.devs.surf-7C3AED?style=for-the-badge&logo=vercel&logoColor=white" alt="Portfolio"></a>
           <a href="https://github.com/aceyash-dev"><img src="https://img.shields.io/badge/GITHUB-aceyash--dev-181717?style=for-the-badge&logo=github" alt="GitHub"></a>
@@ -12,7 +11,7 @@
         <img src="https://komarev.com/ghpvc/?username=aceyash-dev&style=flat-square&color=7C3AED&label=PROFILE+VIEWS" alt="Profile views">
       </td>
       <td width="36%" align="center" valign="middle">
-        <img src="./assets/dot-loop.gif" width="100%" alt="Animated monochrome dotted artwork">
+        <img src="./assets/logo.gif" width="100%" alt="Animated monochrome dotted artwork">
       </td>
     </tr>
   </table>
@@ -73,15 +72,7 @@
       <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=aceyash-dev&layout=compact&hide_border=true&theme=transparent&langs_count=6" height="165" alt="Top languages">
     </td>
   </tr>
-  <tr>
-    <td colspan="2" align="center">
-      <img src="https://streak-stats.demolab.com?user=aceyash-dev&hide_border=true&theme=transparent" width="100%" alt="GitHub contribution streak">
-    </td>
-  </tr>
 </table>
-
-<div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=aceyash-dev&theme=github-compact&hide_border=true&area=true" width="100%" alt="Contribution activity graph">
   <br>
   <a href="https://ace.devs.surf">Portfolio</a> ·
   <a href="https://github.com/aceyash-dev">GitHub</a>
