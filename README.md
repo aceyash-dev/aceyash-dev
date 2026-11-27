@@ -11,7 +11,7 @@
         <img src="https://komarev.com/ghpvc/?username=aceyash-dev&style=flat-square&color=7C3AED&label=PROFILE+VIEWS" alt="Profile views">
       </td>
       <td width="36%" align="center" valign="middle">
-        <img src="./assets/logo.gif" width="100%" alt="Animated monochrome dotted artwork">
+        <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_3HjfMN40D9z3WER6jhG5OXDMyP7/c4253a4e-8f0f-4d78-a46a-078caf44f629.gif" width="100%" alt="Animated monochrome dotted artwork">
       </td>
     </tr>
   </table>
